@@ -1,103 +1,207 @@
-import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+export const metadata = {
+  title: 'Rubyjane - Frontend Developer Portfolio | React & Next.js Expert',
+  description: 'Frontend developer passionate about creating beautiful and functional web experiences. Specialized in React, Next.js, TypeScript, and modern web technologies.',
+  keywords: ['frontend developer', 'react developer', 'next.js developer', 'web developer', 'portfolio', 'javascript', 'typescript', 'tailwindcss'],
+  openGraph: {
+    title: 'Rubyjane - Frontend Developer Portfolio | React & Next.js Expert',
+    description: 'Frontend developer passionate about creating beautiful and functional web experiences. Specialized in React, Next.js, TypeScript, and modern web technologies.',
+    url: '/',
+  },
+};
+
+const Home = () => {
+  const skills = [
+    "React",
+    "Next.js",
+    "JavaScript",
+    "TypeScript",
+    "TailwindCSS",
+    "Node.js",
+  ];
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-[#232931]">
+      {/* Hero Section */}
+      <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center">
+            <h1 className="text-4xl sm:text-6xl font-bold text-[#EEEEEE] mb-6">
+              Hi, I&apos;m <span className="text-[#00ADB5]">Rubyjane</span>
+            </h1>
+            <p className="text-xl sm:text-2xl text-[#EEEEEE]/80 mb-8 max-w-3xl mx-auto">
+              Frontend Developer passionate about creating beautiful and
+              functional web experiences
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/project"
+                className="bg-[#00ADB5] text-[#232931] px-8 py-3 rounded-lg font-semibold hover:bg-[#00bfc5] transition-colors"
+                aria-label="View my portfolio projects"
+              >
+                View My Work
+              </Link>
+              <Link
+                href="/contact"
+                className="border border-[#00ADB5] text-[#00ADB5] px-8 py-3 rounded-lg font-semibold hover:bg-[#393E46] transition-colors"
+                aria-label="Get in touch with me"
+              >
+                Get In Touch
+              </Link>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* Skills Section */}
+      <section className="py-16 bg-[#232931]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-[#EEEEEE] mb-4">
+              Skills & Technologies
+            </h2>
+            <p className="text-[#EEEEEE]/80 max-w-2xl mx-auto">
+              I work with modern web technologies to build responsive and
+              scalable applications
+            </p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {skills.map((skill) => (
+              <div
+                key={skill}
+                className="bg-[#393E46] p-4 rounded-lg shadow-sm border border-[#393E46] text-center hover:shadow-md transition-shadow"
+              >
+                <span className="text-[#EEEEEE] font-medium">{skill}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Projects Preview */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-[#EEEEEE] mb-4">
+              Featured Projects
+            </h2>
+            <p className="text-[#EEEEEE]/80 max-w-2xl mx-auto">
+              Here are some of my recent projects that showcase my skills and
+              experience
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Project Card 1 */}
+            <div className="bg-[#393E46] rounded-lg shadow-sm border border-[#393E46] overflow-hidden hover:shadow-md transition-shadow">
+              <div className="h-48 bg-[#232931] flex items-center justify-center">
+                <span className="text-[#EEEEEE]/50">Project Image</span>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-[#EEEEEE] mb-2">
+                  E-Commerce Platform
+                </h3>
+                <p className="text-[#EEEEEE]/80 mb-4">
+                  A modern e-commerce platform built with Next.js and Stripe
+                  integration
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
+                    React
+                  </span>
+                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
+                    Next.js
+                  </span>
+                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
+                    Stripe
+                  </span>
+                </div>
+                <Link
+                  href="/project"
+                  className="text-[#00ADB5] hover:underline font-medium"
+                >
+                  View Project →
+                </Link>
+              </div>
+            </div>
+
+            {/* Project Card 2 */}
+            <div className="bg-[#393E46] rounded-lg shadow-sm border border-[#393E46] overflow-hidden hover:shadow-md transition-shadow">
+              <div className="h-48 bg-[#232931] flex items-center justify-center">
+                <span className="text-[#EEEEEE]/50">Project Image</span>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-[#EEEEEE] mb-2">
+                  Task Management App
+                </h3>
+                <p className="text-[#EEEEEE]/80 mb-4">
+                  A collaborative task management application with real-time
+                  updates
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
+                    React
+                  </span>
+                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
+                    Firebase
+                  </span>
+                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
+                    TailwindCSS
+                  </span>
+                </div>
+                <Link
+                  href="/project"
+                  className="text-[#00ADB5] hover:underline font-medium"
+                >
+                  View Project →
+                </Link>
+              </div>
+            </div>
+
+            {/* Project Card 3 */}
+            <div className="bg-[#393E46] rounded-lg shadow-sm border border-[#393E46] overflow-hidden hover:shadow-md transition-shadow">
+              <div className="h-48 bg-[#232931] flex items-center justify-center">
+                <span className="text-[#EEEEEE]/50">Project Image</span>
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-[#EEEEEE] mb-2">
+                  Weather Dashboard
+                </h3>
+                <p className="text-[#EEEEEE]/80 mb-4">
+                  A beautiful weather dashboard with location-based forecasts
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
+                    JavaScript
+                  </span>
+                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
+                    API
+                  </span>
+                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
+                    CSS3
+                  </span>
+                </div>
+                <Link
+                  href="/project"
+                  className="text-[#00ADB5] hover:underline font-medium"
+                >
+                  View Project →
+                </Link>
+              </div>
+            </div>
+          </div>
+          <div className="text-center mt-8">
+            <Link
+              href="/project"
+              className="bg-[#00ADB5] text-[#232931] px-8 py-3 rounded-lg font-semibold hover:bg-[#00bfc5] transition-colors"
+            >
+              View All Projects
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
-}
+};
+
+export default Home;
