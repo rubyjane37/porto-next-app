@@ -1,11 +1,12 @@
-'use client';
+"use client";
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,24 +21,24 @@ const geistMono = Geist_Mono({
 // Create a custom dark theme
 const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
     primary: {
-      main: '#00ADB5',
+      main: "#00ADB5",
     },
     secondary: {
-      main: '#EEEEEE',
+      main: "#EEEEEE",
     },
     background: {
-      default: '#232931',
-      paper: '#393E46',
+      default: "#232931",
+      paper: "#393E46",
     },
     text: {
-      primary: '#EEEEEE',
-      secondary: '#EEEEEE',
+      primary: "#EEEEEE",
+      secondary: "#EEEEEE",
     },
   },
   typography: {
-    fontFamily: 'var(--font-geist-sans), Arial, Helvetica, sans-serif',
+    fontFamily: "var(--font-geist-sans), Arial, Helvetica, sans-serif",
     h1: {
       fontWeight: 700,
     },
@@ -61,7 +62,7 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          textTransform: 'none',
+          textTransform: "none",
           borderRadius: 8,
         },
       },
@@ -76,7 +77,7 @@ const theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          '& .MuiOutlinedInput-root': {
+          "& .MuiOutlinedInput-root": {
             borderRadius: 8,
           },
         },
@@ -90,25 +91,31 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <title>Portfolio - Frontend Developer</title>
-        <meta name="description" content="Frontend developer passionate about creating beautiful and functional web experiences" />
+        <meta
+          name="description"
+          content="Frontend developer passionate about creating beautiful and functional web experiences"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable}`}
         style={{
           margin: 0,
           padding: 0,
-          backgroundColor: '#232931',
-          color: '#EEEEEE',
-          fontFamily: 'var(--font-geist-sans), Arial, Helvetica, sans-serif',
-          minHeight: '100vh',
+          backgroundColor: "#232931",
+          color: "#EEEEEE",
+          fontFamily: "var(--font-geist-sans), Arial, Helvetica, sans-serif",
+          minHeight: "100vh",
           lineHeight: 1.6,
         }}
       >
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Header />
-          <main style={{ minHeight: '100vh', paddingTop: '64px' }}>{children}</main>
+          <main style={{ minHeight: "100vh", paddingTop: "64px" }}>
+            {children}
+          </main>
           <Footer />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>
