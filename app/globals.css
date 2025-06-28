@@ -1,67 +1,30 @@
 @import "tailwindcss";
 
-/* Critical CSS for above-the-fold content */
-:root {
-  --color-primary: #00ADB5;
-  --color-secondary: #393E46;
-  --color-background: #232931;
-  --color-text: #EEEEEE;
-}
-
-/* Set default background and text color for dark theme */
+/* Reset default styles */
 * {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
 body {
-  background: var(--color-background);
-  color: var(--color-text);
+  background: #232931;
+  color: #EEEEEE;
   font-family: var(--font-geist-sans, Arial, Helvetica, sans-serif);
   min-height: 100vh;
   line-height: 1.6;
-  margin: 0;
-  padding: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Optimize images */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+/* Ensure proper font loading */
+.font-geist-sans {
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
-/* Improve focus accessibility */
-*:focus {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-/* Optimize animations */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Print styles */
-@media print {
-  body {
-    background: white !important;
-    color: black !important;
-  }
-  
-  .no-print {
-    display: none !important;
-  }
+.font-geist-mono {
+  font-family: var(--font-geist-mono), 'Courier New', monospace;
 }

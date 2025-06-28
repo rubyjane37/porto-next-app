@@ -1,132 +1,115 @@
+'use client';
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: "swap",
 });
 
-export const metadata = {
-  title: "Rubyjane - Frontend Developer Portfolio",
-  description: "Frontend developer passionate about creating beautiful and functional web experiences. Specialized in React, Next.js, and modern web technologies.",
-  keywords: ["frontend developer", "react developer", "next.js developer", "web developer", "portfolio", "javascript", "typescript"],
-  authors: [{ name: "Rubyjane" }],
-  creator: "Rubyjane",
-  publisher: "Rubyjane",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  metadataBase: new URL('https://your-domain.com'),
-  alternates: {
-    canonical: '/',
-  },
-  openGraph: {
-    title: "Rubyjane - Frontend Developer Portfolio",
-    description: "Frontend developer passionate about creating beautiful and functional web experiences. Specialized in React, Next.js, and modern web technologies.",
-    url: 'https://your-domain.com',
-    siteName: 'Rubyjane Portfolio',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Rubyjane - Frontend Developer Portfolio',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: "Rubyjane - Frontend Developer Portfolio",
-    description: "Frontend developer passionate about creating beautiful and functional web experiences.",
-    images: ['/og-image.jpg'],
-    creator: '@yourtwitterhandle',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+// Create a custom dark theme
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#00ADB5',
+    },
+    secondary: {
+      main: '#EEEEEE',
+    },
+    background: {
+      default: '#232931',
+      paper: '#393E46',
+    },
+    text: {
+      primary: '#EEEEEE',
+      secondary: '#EEEEEE',
     },
   },
-  verification: {
-    google: 'your-google-verification-code',
+  typography: {
+    fontFamily: 'var(--font-geist-sans), Arial, Helvetica, sans-serif',
+    h1: {
+      fontWeight: 700,
+    },
+    h2: {
+      fontWeight: 600,
+    },
+    h3: {
+      fontWeight: 600,
+    },
+    h4: {
+      fontWeight: 600,
+    },
+    h5: {
+      fontWeight: 600,
+    },
+    h6: {
+      fontWeight: 600,
+    },
   },
-};
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+          borderRadius: 8,
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            borderRadius: 8,
+          },
+        },
+      },
+    },
+  },
+});
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#232931" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Person",
-              "name": "Rubyjane",
-              "jobTitle": "Frontend Developer",
-              "description": "Frontend developer passionate about creating beautiful and functional web experiences",
-              "url": "https://your-domain.com",
-              "sameAs": [
-                "https://github.com/natsrululum37",
-                "https://linkedin.com/in/yourprofile",
-                "https://twitter.com/yourhandle"
-              ],
-              "knowsAbout": ["React", "Next.js", "JavaScript", "TypeScript", "Web Development"],
-              "worksFor": {
-                "@type": "Organization",
-                "name": "Freelance"
-              }
-            })
-          }}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js')
-                    .then(function(registration) {
-                      console.log('SW registered: ', registration);
-                    })
-                    .catch(function(registrationError) {
-                      console.log('SW registration failed: ', registrationError);
-                    });
-                });
-              }
-            `,
-          }}
-        />
+        <title>Portfolio - Frontend Developer</title>
+        <meta name="description" content="Frontend developer passionate about creating beautiful and functional web experiences" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#232931] text-[#EEEEEE]`}
+        className={`${geistSans.variable} ${geistMono.variable}`}
+        style={{
+          margin: 0,
+          padding: 0,
+          backgroundColor: '#232931',
+          color: '#EEEEEE',
+          fontFamily: 'var(--font-geist-sans), Arial, Helvetica, sans-serif',
+          minHeight: '100vh',
+          lineHeight: 1.6,
+        }}
       >
-        <Header />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Header />
+          <main style={{ minHeight: '100vh', paddingTop: '64px' }}>{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

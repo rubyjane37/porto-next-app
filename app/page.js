@@ -1,206 +1,330 @@
 import Link from "next/link";
-
-export const metadata = {
-  title: 'Rubyjane - Frontend Developer Portfolio | React & Next.js Expert',
-  description: 'Frontend developer passionate about creating beautiful and functional web experiences. Specialized in React, Next.js, TypeScript, and modern web technologies.',
-  keywords: ['frontend developer', 'react developer', 'next.js developer', 'web developer', 'portfolio', 'javascript', 'typescript', 'tailwindcss'],
-  openGraph: {
-    title: 'Rubyjane - Frontend Developer Portfolio | React & Next.js Expert',
-    description: 'Frontend developer passionate about creating beautiful and functional web experiences. Specialized in React, Next.js, TypeScript, and modern web technologies.',
-    url: '/',
-  },
-};
+import { 
+  Container, 
+  Typography, 
+  Box, 
+  Grid, 
+  Card, 
+  CardContent, 
+  Button, 
+  Chip,
+  Stack
+} from '@mui/material';
+import { 
+  FaReact, 
+  FaNodeJs, 
+  FaJs, 
+  FaHtml5, 
+  FaCss3Alt 
+} from 'react-icons/fa';
+import { 
+  SiNextdotjs, 
+  SiTypescript, 
+  SiTailwindcss 
+} from 'react-icons/si';
 
 const Home = () => {
   const skills = [
-    "React",
-    "Next.js",
-    "JavaScript",
-    "TypeScript",
-    "TailwindCSS",
-    "Node.js",
+    { name: "React", icon: <FaReact size={32} /> },
+    { name: "Next.js", icon: <SiNextdotjs size={32} /> },
+    { name: "JavaScript", icon: <FaJs size={32} /> },
+    { name: "TypeScript", icon: <SiTypescript size={32} /> },
+    { name: "TailwindCSS", icon: <SiTailwindcss size={32} /> },
+    { name: "Node.js", icon: <FaNodeJs size={32} /> },
+  ];
+
+  const featuredProjects = [
+    {
+      title: "E-Commerce Platform",
+      description: "A modern e-commerce platform built with Next.js and Stripe integration",
+      technologies: ["React", "Next.js", "Stripe"],
+      image: "/project1.jpg"
+    },
+    {
+      title: "Task Management App",
+      description: "A collaborative task management application with real-time updates",
+      technologies: ["React", "Firebase", "TailwindCSS"],
+      image: "/project2.jpg"
+    },
+    {
+      title: "Weather Dashboard",
+      description: "A beautiful weather dashboard with location-based forecasts",
+      technologies: ["JavaScript", "API", "CSS3"],
+      image: "/project3.jpg"
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-[#232931]">
+    <Box sx={{ backgroundColor: '#232931' }}>
       {/* Hero Section */}
-      <section className="pt-20 pb-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <h1 className="text-4xl sm:text-6xl font-bold text-[#EEEEEE] mb-6">
-              Hi, I&apos;m <span className="text-[#00ADB5]">Rubyjane</span>
-            </h1>
-            <p className="text-xl sm:text-2xl text-[#EEEEEE]/80 mb-8 max-w-3xl mx-auto">
-              Frontend Developer passionate about creating beautiful and
-              functional web experiences
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/project"
-                className="bg-[#00ADB5] text-[#232931] px-8 py-3 rounded-lg font-semibold hover:bg-[#00bfc5] transition-colors"
-                aria-label="View my portfolio projects"
-              >
-                View My Work
-              </Link>
-              <Link
-                href="/contact"
-                className="border border-[#00ADB5] text-[#00ADB5] px-8 py-3 rounded-lg font-semibold hover:bg-[#393E46] transition-colors"
-                aria-label="Get in touch with me"
-              >
-                Get In Touch
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        <Box sx={{ textAlign: 'center' }}>
+          <Typography 
+            variant="h2" 
+            component="h1" 
+            sx={{ 
+              color: '#EEEEEE', 
+              mb: 3, 
+              fontWeight: 'bold',
+              fontSize: { xs: '2.5rem', sm: '3.75rem' }
+            }}
+          >
+            Hi, I&apos;m <Box component="span" sx={{ color: '#00ADB5' }}>Natsrul Ulum</Box>
+          </Typography>
+          <Typography 
+            variant="h5" 
+            sx={{ 
+              color: '#EEEEEE', 
+              opacity: 0.8, 
+              mb: 4, 
+              maxWidth: 'md', 
+              mx: 'auto',
+              fontSize: { xs: '1.25rem', sm: '1.5rem' }
+            }}
+          >
+            Frontend Developer passionate about creating beautiful and
+            functional web experiences
+          </Typography>
+          <Stack 
+            direction={{ xs: 'column', sm: 'row' }} 
+            spacing={2} 
+            justifyContent="center"
+            sx={{ mb: 4 }}
+          >
+            <Button
+              component={Link}
+              href="/project"
+              variant="contained"
+              size="large"
+              sx={{
+                backgroundColor: '#00ADB5',
+                color: '#232931',
+                px: 4,
+                py: 1.5,
+                '&:hover': {
+                  backgroundColor: '#00bfc5',
+                },
+              }}
+            >
+              View My Work
+            </Button>
+            <Button
+              component={Link}
+              href="/contact"
+              variant="outlined"
+              size="large"
+              sx={{
+                borderColor: '#00ADB5',
+                color: '#00ADB5',
+                px: 4,
+                py: 1.5,
+                '&:hover': {
+                  borderColor: '#00bfc5',
+                  backgroundColor: 'rgba(0, 173, 181, 0.1)',
+                },
+              }}
+            >
+              Get In Touch
+            </Button>
+          </Stack>
+        </Box>
+      </Container>
 
       {/* Skills Section */}
-      <section className="py-16 bg-[#232931]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#EEEEEE] mb-4">
+      <Box sx={{ py: 8, backgroundColor: '#232931' }}>
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', mb: 6 }}>
+            <Typography 
+              variant="h3" 
+              component="h2" 
+              sx={{ color: '#EEEEEE', mb: 2, fontWeight: 'bold' }}
+            >
               Skills & Technologies
-            </h2>
-            <p className="text-[#EEEEEE]/80 max-w-2xl mx-auto">
+            </Typography>
+            <Typography 
+              variant="h6" 
+              sx={{ color: '#EEEEEE', opacity: 0.8, maxWidth: 'md', mx: 'auto' }}
+            >
               I work with modern web technologies to build responsive and
               scalable applications
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            </Typography>
+          </Box>
+          <Grid container spacing={3}>
             {skills.map((skill) => (
-              <div
-                key={skill}
-                className="bg-[#393E46] p-4 rounded-lg shadow-sm border border-[#393E46] text-center hover:shadow-md transition-shadow"
-              >
-                <span className="text-[#EEEEEE] font-medium">{skill}</span>
-              </div>
+              <Grid size={{ xs: 6, md: 4, lg: 2 }} key={skill.name}>
+                <Card 
+                  sx={{ 
+                    backgroundColor: '#393E46', 
+                    border: '1px solid #393E46',
+                    textAlign: 'center',
+                    p: 3,
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+                    },
+                  }}
+                >
+                  <Box sx={{ color: '#00ADB5', mb: 2 }}>
+                    {skill.icon}
+                  </Box>
+                  <Typography 
+                    variant="body1" 
+                    sx={{ color: '#EEEEEE', fontWeight: 500 }}
+                  >
+                    {skill.name}
+                  </Typography>
+                </Card>
+              </Grid>
             ))}
-          </div>
-        </div>
-      </section>
+          </Grid>
+        </Container>
+      </Box>
 
       {/* Featured Projects Preview */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#EEEEEE] mb-4">
+      <Box sx={{ py: 8 }}>
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', mb: 6 }}>
+            <Typography 
+              variant="h3" 
+              component="h2" 
+              sx={{ color: '#EEEEEE', mb: 2, fontWeight: 'bold' }}
+            >
               Featured Projects
-            </h2>
-            <p className="text-[#EEEEEE]/80 max-w-2xl mx-auto">
+            </Typography>
+            <Typography 
+              variant="h6" 
+              sx={{ color: '#EEEEEE', opacity: 0.8, maxWidth: 'md', mx: 'auto' }}
+            >
               Here are some of my recent projects that showcase my skills and
               experience
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Project Card 1 */}
-            <div className="bg-[#393E46] rounded-lg shadow-sm border border-[#393E46] overflow-hidden hover:shadow-md transition-shadow">
-              <div className="h-48 bg-[#232931] flex items-center justify-center">
-                <span className="text-[#EEEEEE]/50">Project Image</span>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-[#EEEEEE] mb-2">
-                  E-Commerce Platform
-                </h3>
-                <p className="text-[#EEEEEE]/80 mb-4">
-                  A modern e-commerce platform built with Next.js and Stripe
-                  integration
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
-                    React
-                  </span>
-                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
-                    Next.js
-                  </span>
-                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
-                    Stripe
-                  </span>
-                </div>
-                <Link
-                  href="/project"
-                  className="text-[#00ADB5] hover:underline font-medium"
+            </Typography>
+          </Box>
+          <Grid container spacing={4}>
+            {featuredProjects.map((project, index) => (
+              <Grid size={{ xs: 12, md: 6, lg: 4 }} key={index}>
+                <Card 
+                  sx={{ 
+                    backgroundColor: '#393E46', 
+                    border: '1px solid #393E46',
+                    height: '100%',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+                    },
+                  }}
                 >
-                  View Project →
-                </Link>
-              </div>
-            </div>
-
-            {/* Project Card 2 */}
-            <div className="bg-[#393E46] rounded-lg shadow-sm border border-[#393E46] overflow-hidden hover:shadow-md transition-shadow">
-              <div className="h-48 bg-[#232931] flex items-center justify-center">
-                <span className="text-[#EEEEEE]/50">Project Image</span>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-[#EEEEEE] mb-2">
-                  Task Management App
-                </h3>
-                <p className="text-[#EEEEEE]/80 mb-4">
-                  A collaborative task management application with real-time
-                  updates
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
-                    React
-                  </span>
-                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
-                    Firebase
-                  </span>
-                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
-                    TailwindCSS
-                  </span>
-                </div>
-                <Link
-                  href="/project"
-                  className="text-[#00ADB5] hover:underline font-medium"
-                >
-                  View Project →
-                </Link>
-              </div>
-            </div>
-
-            {/* Project Card 3 */}
-            <div className="bg-[#393E46] rounded-lg shadow-sm border border-[#393E46] overflow-hidden hover:shadow-md transition-shadow">
-              <div className="h-48 bg-[#232931] flex items-center justify-center">
-                <span className="text-[#EEEEEE]/50">Project Image</span>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-[#EEEEEE] mb-2">
-                  Weather Dashboard
-                </h3>
-                <p className="text-[#EEEEEE]/80 mb-4">
-                  A beautiful weather dashboard with location-based forecasts
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
-                    JavaScript
-                  </span>
-                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
-                    API
-                  </span>
-                  <span className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded">
-                    CSS3
-                  </span>
-                </div>
-                <Link
-                  href="/project"
-                  className="text-[#00ADB5] hover:underline font-medium"
-                >
-                  View Project →
-                </Link>
-              </div>
-            </div>
-          </div>
-          <div className="text-center mt-8">
-            <Link
+                  <Box 
+                    sx={{ 
+                      height: 200, 
+                      backgroundColor: '#232931',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      position: 'relative',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: '100%',
+                        height: '100%',
+                        background: 'linear-gradient(135deg, #00ADB5 0%, #393E46 100%)',
+                        opacity: 0.3,
+                        position: 'absolute',
+                      }}
+                    />
+                    <Typography 
+                      sx={{ 
+                        color: '#EEEEEE', 
+                        opacity: 0.7,
+                        fontSize: '1.2rem',
+                        fontWeight: 500,
+                        zIndex: 1,
+                        textAlign: 'center',
+                      }}
+                    >
+                      {project.title}
+                    </Typography>
+                  </Box>
+                  <CardContent sx={{ p: 3 }}>
+                    <Typography 
+                      variant="h6" 
+                      component="h3" 
+                      sx={{ color: '#EEEEEE', mb: 2, fontWeight: 600 }}
+                    >
+                      {project.title}
+                    </Typography>
+                    <Typography 
+                      sx={{ color: '#EEEEEE', opacity: 0.8, mb: 3 }}
+                    >
+                      {project.description}
+                    </Typography>
+                    <Box sx={{ mb: 3 }}>
+                      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                        {project.technologies.map((tech) => (
+                          <Chip
+                            key={tech}
+                            label={tech}
+                            size="small"
+                            sx={{
+                              backgroundColor: 'rgba(0, 173, 181, 0.2)',
+                              color: '#00ADB5',
+                              fontSize: '0.75rem',
+                            }}
+                          />
+                        ))}
+                      </Stack>
+                    </Box>
+                    <Button
+                      component={Link}
+                      href="/project"
+                      sx={{
+                        color: '#00ADB5',
+                        textTransform: 'none',
+                        fontWeight: 500,
+                        p: 0,
+                        '&:hover': {
+                          textDecoration: 'underline',
+                          backgroundColor: 'transparent',
+                        },
+                      }}
+                    >
+                      View Project →
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+          <Box sx={{ textAlign: 'center', mt: 6 }}>
+            <Button
+              component={Link}
               href="/project"
-              className="bg-[#00ADB5] text-[#232931] px-8 py-3 rounded-lg font-semibold hover:bg-[#00bfc5] transition-colors"
+              variant="contained"
+              size="large"
+              sx={{
+                backgroundColor: '#00ADB5',
+                color: '#232931',
+                px: 4,
+                py: 1.5,
+                '&:hover': {
+                  backgroundColor: '#00bfc5',
+                },
+              }}
             >
               View All Projects
-            </Link>
-          </div>
-        </div>
-      </section>
-    </div>
+            </Button>
+          </Box>
+        </Container>
+      </Box>
+    </Box>
   );
 };
 

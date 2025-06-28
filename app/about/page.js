@@ -1,15 +1,27 @@
 import Image from 'next/image';
-
-export const metadata = {
-  title: 'About - Rubyjane | Frontend Developer',
-  description: 'Learn more about Rubyjane, a passionate frontend developer with 3+ years of experience in React, Next.js, and modern web technologies.',
-  keywords: ['about', 'frontend developer', 'react developer', 'next.js developer', 'experience', 'skills'],
-  openGraph: {
-    title: 'About - Rubyjane | Frontend Developer',
-    description: 'Learn more about Rubyjane, a passionate frontend developer with 3+ years of experience in React, Next.js, and modern web technologies.',
-    url: '/about',
-  },
-};
+import { 
+  Container, 
+  Typography, 
+  Box, 
+  Grid, 
+  Card, 
+  CardContent, 
+  LinearProgress,
+  Avatar,
+  Stack,
+  Chip
+} from '@mui/material';
+import { 
+  FaReact, 
+  FaNodeJs, 
+  FaJs, 
+  FaGitAlt 
+} from 'react-icons/fa';
+import { 
+  SiNextdotjs, 
+  SiTypescript, 
+  SiTailwindcss 
+} from 'react-icons/si';
 
 const About = () => {
   const experiences = [
@@ -42,200 +54,243 @@ const About = () => {
     }
   ];
 
-  return (
-    <div className="min-h-screen pt-20 bg-[#232931]">
-      {/* Hero Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-[#EEEEEE] mb-6">About Me</h1>
-            <p className="text-xl text-[#EEEEEE]/80 max-w-3xl mx-auto">
-              I&apos;m a passionate frontend developer with a love for creating beautiful, 
-              functional, and user-friendly web experiences.
-            </p>
-          </div>
+  const skills = [
+    { name: 'React', percentage: 90, icon: <FaReact size={20} /> },
+    { name: 'Next.js', percentage: 85, icon: <SiNextdotjs size={20} /> },
+    { name: 'JavaScript', percentage: 95, icon: <FaJs size={20} /> },
+    { name: 'TypeScript', percentage: 80, icon: <SiTypescript size={20} /> },
+    { name: 'TailwindCSS', percentage: 90, icon: <SiTailwindcss size={20} /> },
+    { name: 'Node.js', percentage: 75, icon: <FaNodeJs size={20} /> },
+    { name: 'Git', percentage: 85, icon: <FaGitAlt size={20} /> },
+    { name: 'UI/UX Design', percentage: 70, icon: <FaReact size={20} /> },
+  ];
 
-          {/* Profile Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-            <div>
-              <div className="w-64 h-64 bg-[#393E46] rounded-full mx-auto lg:mx-0 flex items-center justify-center overflow-hidden">
-                <Image 
-                  src="/photo-profile/photo-profile.jpg" 
-                  alt="Rubyjane - Frontend Developer Profile" 
-                  width={256} 
-                  height={256} 
-                  className="object-cover w-full h-full rounded-full"
-                  priority
-                  sizes="(max-width: 768px) 256px, 256px"
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                />
-              </div>
-            </div>
-            <div className="space-y-6">
-              <h2 className="text-2xl font-semibold text-[#EEEEEE]">Who I Am</h2>
-              <p className="text-[#EEEEEE]/80 leading-relaxed">
-                I&apos;m a dedicated frontend developer with over 3 years of experience in creating 
-                modern web applications. I specialize in React, Next.js, and modern JavaScript, 
-                always staying up-to-date with the latest technologies and best practices.
-              </p>
-              <p className="text-[#EEEEEE]/80 leading-relaxed">
-                My passion lies in building user-centric applications that not only look great 
-                but also provide exceptional user experiences. I believe in writing clean, 
-                maintainable code and collaborating effectively with teams to deliver high-quality products.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-[#00ADB5]">3+</div>
-                  <div className="text-sm text-[#EEEEEE]/80">Years Experience</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-[#00ADB5]">20+</div>
-                  <div className="text-sm text-[#EEEEEE]/80">Projects Completed</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-[#00ADB5]">15+</div>
-                  <div className="text-sm text-[#EEEEEE]/80">Happy Clients</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+  const stats = [
+    { label: 'Years Experience', value: '3+' },
+    { label: 'Projects Completed', value: '20+' },
+    { label: 'Happy Clients', value: '15+' },
+  ];
+
+  return (
+    <Box sx={{ backgroundColor: '#232931' }}>
+      {/* Hero Section */}
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        <Box sx={{ textAlign: 'center', mb: 6 }}>
+          <Typography variant="h3" component="h1" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 'bold' }}>
+            About Me
+          </Typography>
+          <Typography variant="h6" sx={{ color: '#EEEEEE', opacity: 0.8, maxWidth: 'md', mx: 'auto' }}>
+            I&apos;m a passionate frontend developer with a love for creating beautiful, 
+            functional, and user-friendly web experiences.
+          </Typography>
+        </Box>
+
+        {/* Profile Section */}
+        <Grid container spacing={4} alignItems="center" sx={{ mb: 8 }}>
+          <Grid size={{ xs: 12, lg: 6 }} sx={{ textAlign: { xs: 'center', lg: 'left' } }}>
+            <Box sx={{ display: 'flex', justifyContent: { xs: 'center', lg: 'flex-start' } }}>
+              <Avatar
+                src="/photo-profile/photo-profile.jpg"
+                alt="Profile"
+                sx={{ 
+                  width: 256, 
+                  height: 256,
+                  border: '4px solid #393E46',
+                }}
+              />
+            </Box>
+          </Grid>
+          <Grid size={{ xs: 12, lg: 6 }}>
+            <Typography variant="h4" component="h2" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 600 }}>
+              Who I Am
+            </Typography>
+            <Typography sx={{ color: '#EEEEEE', opacity: 0.8, mb: 3, lineHeight: 1.8 }}>
+              I&apos;m a dedicated frontend developer with over 3 years of experience in creating 
+              modern web applications. I specialize in React, Next.js, and modern JavaScript, 
+              always staying up-to-date with the latest technologies and best practices.
+            </Typography>
+            <Typography sx={{ color: '#EEEEEE', opacity: 0.8, mb: 4, lineHeight: 1.8 }}>
+              My passion lies in building user-centric applications that not only look great 
+              but also provide exceptional user experiences. I believe in writing clean, 
+              maintainable code and collaborating effectively with teams to deliver high-quality products.
+            </Typography>
+            <Grid container spacing={3}>
+              {stats.map((stat, index) => (
+                <Grid size={{ xs: 4 }} key={index}>
+                  <Box sx={{ textAlign: 'center' }}>
+                    <Typography variant="h4" sx={{ color: '#00ADB5', fontWeight: 'bold', mb: 1 }}>
+                      {stat.value}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: '#EEEEEE', opacity: 0.8 }}>
+                      {stat.label}
+                    </Typography>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+        </Grid>
+      </Container>
 
       {/* Experience Section */}
-      <section className="py-16 bg-[#232931]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-[#EEEEEE] text-center mb-12">Experience</h2>
-          <div className="space-y-8">
+      <Box sx={{ py: 8, backgroundColor: '#232931' }}>
+        <Container maxWidth="lg">
+          <Typography variant="h3" component="h2" sx={{ color: '#EEEEEE', textAlign: 'center', mb: 6, fontWeight: 'bold' }}>
+            Experience
+          </Typography>
+          <Grid container spacing={3}>
             {experiences.map((exp, index) => (
-              <div key={index} className="bg-[#393E46] p-6 rounded-lg shadow-sm border border-[#393E46]">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#EEEEEE]">{exp.title}</h3>
-                    <p className="text-[#00ADB5] font-medium">{exp.company}</p>
-                  </div>
-                  <span className="text-[#EEEEEE]/60 font-medium mt-2 md:mt-0">{exp.year}</span>
-                </div>
-                <p className="text-[#EEEEEE]/80">{exp.description}</p>
-              </div>
+              <Grid size={{ xs: 12 }} key={index}>
+                <Card sx={{ backgroundColor: '#393E46', border: '1px solid #393E46' }}>
+                  <CardContent sx={{ p: 4 }}>
+                    <Grid container alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
+                      <Grid size={{ xs: 12, md: 8 }}>
+                        <Typography variant="h5" component="h3" sx={{ color: '#EEEEEE', mb: 1, fontWeight: 600 }}>
+                          {exp.title}
+                        </Typography>
+                        <Typography variant="h6" sx={{ color: '#00ADB5', fontWeight: 500 }}>
+                          {exp.company}
+                        </Typography>
+                      </Grid>
+                      <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { xs: 'left', md: 'right' } }}>
+                        <Typography sx={{ color: '#EEEEEE', opacity: 0.6, fontWeight: 500 }}>
+                          {exp.year}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Typography sx={{ color: '#EEEEEE', opacity: 0.8 }}>
+                      {exp.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
             ))}
-          </div>
-        </div>
-      </section>
+          </Grid>
+        </Container>
+      </Box>
 
       {/* Education Section */}
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-[#EEEEEE] text-center mb-12">Education</h2>
-          <div className="space-y-8">
+      <Box sx={{ py: 8 }}>
+        <Container maxWidth="lg">
+          <Typography variant="h3" component="h2" sx={{ color: '#EEEEEE', textAlign: 'center', mb: 6, fontWeight: 'bold' }}>
+            Education
+          </Typography>
+          <Grid container spacing={3}>
             {education.map((edu, index) => (
-              <div key={index} className="bg-[#393E46] p-6 rounded-lg shadow-sm border border-[#393E46]">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                  <div>
-                    <h3 className="text-xl font-semibold text-[#EEEEEE]">{edu.degree}</h3>
-                    <p className="text-[#00ADB5] font-medium">{edu.school}</p>
-                  </div>
-                  <span className="text-[#EEEEEE]/60 font-medium mt-2 md:mt-0">{edu.year}</span>
-                </div>
-                <p className="text-[#EEEEEE]/80">{edu.description}</p>
-              </div>
+              <Grid size={{ xs: 12 }} key={index}>
+                <Card sx={{ backgroundColor: '#393E46', border: '1px solid #393E46' }}>
+                  <CardContent sx={{ p: 4 }}>
+                    <Grid container alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
+                      <Grid size={{ xs: 12, md: 8 }}>
+                        <Typography variant="h5" component="h3" sx={{ color: '#EEEEEE', mb: 1, fontWeight: 600 }}>
+                          {edu.degree}
+                        </Typography>
+                        <Typography variant="h6" sx={{ color: '#00ADB5', fontWeight: 500 }}>
+                          {edu.school}
+                        </Typography>
+                      </Grid>
+                      <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { xs: 'left', md: 'right' } }}>
+                        <Typography sx={{ color: '#EEEEEE', opacity: 0.6, fontWeight: 500 }}>
+                          {edu.year}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Typography sx={{ color: '#EEEEEE', opacity: 0.8 }}>
+                      {edu.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
             ))}
-          </div>
-        </div>
-      </section>
+          </Grid>
+        </Container>
+      </Box>
 
       {/* Skills Section */}
-      <section className="py-16 bg-[#232931]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-[#EEEEEE] text-center mb-12">Skills & Expertise</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h3 className="text-xl font-semibold text-[#EEEEEE] mb-4">Frontend Development</h3>
-              <div className="space-y-3">
-                <div>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-[#EEEEEE]">React</span>
-                    <span className="text-[#EEEEEE]/60">90%</span>
-                  </div>
-                  <div className="w-full bg-[#393E46] rounded-full h-2">
-                    <div className="bg-[#00ADB5] h-2 rounded-full" style={{ width: '90%' }}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-[#EEEEEE]">Next.js</span>
-                    <span className="text-[#EEEEEE]/60">85%</span>
-                  </div>
-                  <div className="w-full bg-[#393E46] rounded-full h-2">
-                    <div className="bg-[#00ADB5] h-2 rounded-full" style={{ width: '85%' }}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-[#EEEEEE]">JavaScript</span>
-                    <span className="text-[#EEEEEE]/60">95%</span>
-                  </div>
-                  <div className="w-full bg-[#393E46] rounded-full h-2">
-                    <div className="bg-[#00ADB5] h-2 rounded-full" style={{ width: '95%' }}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-[#EEEEEE]">TypeScript</span>
-                    <span className="text-[#EEEEEE]/60">80%</span>
-                  </div>
-                  <div className="w-full bg-[#393E46] rounded-full h-2">
-                    <div className="bg-[#00ADB5] h-2 rounded-full" style={{ width: '80%' }}></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-[#EEEEEE] mb-4">Other Skills</h3>
-              <div className="space-y-3">
-                <div>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-[#EEEEEE]">TailwindCSS</span>
-                    <span className="text-[#EEEEEE]/60">90%</span>
-                  </div>
-                  <div className="w-full bg-[#393E46] rounded-full h-2">
-                    <div className="bg-[#00ADB5] h-2 rounded-full" style={{ width: '90%' }}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-[#EEEEEE]">Node.js</span>
-                    <span className="text-[#EEEEEE]/60">75%</span>
-                  </div>
-                  <div className="w-full bg-[#393E46] rounded-full h-2">
-                    <div className="bg-[#00ADB5] h-2 rounded-full" style={{ width: '75%' }}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-[#EEEEEE]">Git</span>
-                    <span className="text-[#EEEEEE]/60">85%</span>
-                  </div>
-                  <div className="w-full bg-[#393E46] rounded-full h-2">
-                    <div className="bg-[#00ADB5] h-2 rounded-full" style={{ width: '85%' }}></div>
-                  </div>
-                </div>
-                <div>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-[#EEEEEE]">UI/UX Design</span>
-                    <span className="text-[#EEEEEE]/60">70%</span>
-                  </div>
-                  <div className="w-full bg-[#393E46] rounded-full h-2">
-                    <div className="bg-[#00ADB5] h-2 rounded-full" style={{ width: '70%' }}></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+      <Box sx={{ py: 8, backgroundColor: '#232931' }}>
+        <Container maxWidth="lg">
+          <Typography variant="h3" component="h2" sx={{ color: '#EEEEEE', textAlign: 'center', mb: 6, fontWeight: 'bold' }}>
+            Skills & Expertise
+          </Typography>
+          <Grid container spacing={4}>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Typography variant="h5" component="h3" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 600 }}>
+                Frontend Development
+              </Typography>
+              <Stack spacing={3}>
+                {skills.slice(0, 4).map((skill) => (
+                  <Box key={skill.name}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Box sx={{ color: '#00ADB5' }}>
+                          {skill.icon}
+                        </Box>
+                        <Typography sx={{ color: '#EEEEEE' }}>
+                          {skill.name}
+                        </Typography>
+                      </Box>
+                      <Typography sx={{ color: '#EEEEEE', opacity: 0.6 }}>
+                        {skill.percentage}%
+                      </Typography>
+                    </Box>
+                    <LinearProgress
+                      variant="determinate"
+                      value={skill.percentage}
+                      sx={{
+                        height: 8,
+                        borderRadius: 4,
+                        backgroundColor: '#393E46',
+                        '& .MuiLinearProgress-bar': {
+                          backgroundColor: '#00ADB5',
+                          borderRadius: 4,
+                        },
+                      }}
+                    />
+                  </Box>
+                ))}
+              </Stack>
+            </Grid>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Typography variant="h5" component="h3" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 600 }}>
+                Other Skills
+              </Typography>
+              <Stack spacing={3}>
+                {skills.slice(4).map((skill) => (
+                  <Box key={skill.name}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Box sx={{ color: '#00ADB5' }}>
+                          {skill.icon}
+                        </Box>
+                        <Typography sx={{ color: '#EEEEEE' }}>
+                          {skill.name}
+                        </Typography>
+                      </Box>
+                      <Typography sx={{ color: '#EEEEEE', opacity: 0.6 }}>
+                        {skill.percentage}%
+                      </Typography>
+                    </Box>
+                    <LinearProgress
+                      variant="determinate"
+                      value={skill.percentage}
+                      sx={{
+                        height: 8,
+                        borderRadius: 4,
+                        backgroundColor: '#393E46',
+                        '& .MuiLinearProgress-bar': {
+                          backgroundColor: '#00ADB5',
+                          borderRadius: 4,
+                        },
+                      }}
+                    />
+                  </Box>
+                ))}
+              </Stack>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+    </Box>
   );
 };
 

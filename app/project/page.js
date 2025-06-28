@@ -1,16 +1,21 @@
 import Link from "next/link";
 import Image from "next/image";
-
-export const metadata = {
-  title: 'Projects - Rubyjane | Frontend Developer Portfolio',
-  description: 'Explore my portfolio of web development projects including e-commerce platforms, task management apps, and modern web applications built with React and Next.js.',
-  keywords: ['projects', 'portfolio', 'web development', 'react projects', 'next.js projects', 'frontend projects'],
-  openGraph: {
-    title: 'Projects - Rubyjane | Frontend Developer Portfolio',
-    description: 'Explore my portfolio of web development projects including e-commerce platforms, task management apps, and modern web applications built with React and Next.js.',
-    url: '/project',
-  },
-};
+import { 
+  Container, 
+  Typography, 
+  Box, 
+  Grid, 
+  Card, 
+  CardContent, 
+  Button, 
+  Chip,
+  Stack,
+  Paper
+} from '@mui/material';
+import { 
+  FaExternalLinkAlt, 
+  FaGithub 
+} from 'react-icons/fa';
 
 const Project = () => {
   const projects = [
@@ -85,234 +90,387 @@ const Project = () => {
   const categories = ["All", "Frontend", "Full Stack", "Backend"];
 
   return (
-    <div className="min-h-screen pt-20 bg-[#232931]">
+    <Box sx={{ backgroundColor: '#232931' }}>
       {/* Hero Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-[#EEEEEE] mb-6">
-              My Projects
-            </h1>
-            <p className="text-xl text-[#EEEEEE]/80 max-w-3xl mx-auto">
-              Here are some of the projects I&apos;ve worked on. Each project
-              represents my passion for creating innovative solutions and
-              learning new technologies.
-            </p>
-          </div>
+      <Container maxWidth="lg" sx={{ py: 8 }}>
+        <Box sx={{ textAlign: 'center', mb: 6 }}>
+          <Typography variant="h3" component="h1" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 'bold' }}>
+            My Projects
+          </Typography>
+          <Typography variant="h6" sx={{ color: '#EEEEEE', opacity: 0.8, maxWidth: 'md', mx: 'auto' }}>
+            Here are some of the projects I&apos;ve worked on. Each project
+            represents my passion for creating innovative solutions and
+            learning new technologies.
+          </Typography>
+        </Box>
 
-          {/* Project Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <div
-                key={project.id}
-                className="bg-[#393E46] rounded-lg shadow-sm border border-[#393E46] overflow-hidden hover:shadow-lg transition-shadow duration-300"
+        {/* Project Grid */}
+        <Grid container spacing={4}>
+          {projects.map((project) => (
+            <Grid size={{ xs: 12, md: 6, lg: 4 }} key={project.id}>
+              <Card 
+                sx={{ 
+                  backgroundColor: '#393E46', 
+                  border: '1px solid #393E46',
+                  height: '100%',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+                  },
+                }}
               >
                 {/* Project Image */}
-                <div className="h-48 bg-[#232931] flex items-center justify-center relative">
-                  <Image
-                    src="https://placehold.co/600x400/EEE/31343C"
-                    alt={`${project.title} - Project Preview`}
-                    width={600}
-                    height={400}
-                    className="w-full h-48 object-cover bg-[#232931]"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    loading="lazy"
-                    placeholder="blur"
-                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                <Box sx={{ position: 'relative', height: 200 }}>
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: '#232931',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      position: 'relative',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: '100%',
+                        height: '100%',
+                        background: 'linear-gradient(135deg, #00ADB5 0%, #393E46 100%)',
+                        opacity: 0.3,
+                        position: 'absolute',
+                      }}
+                    />
+                    <Typography 
+                      sx={{ 
+                        color: '#EEEEEE', 
+                        opacity: 0.7,
+                        fontSize: '1.2rem',
+                        fontWeight: 500,
+                        zIndex: 1,
+                      }}
+                    >
+                      {project.title}
+                    </Typography>
+                  </Box>
+                  <Chip
+                    label={project.category}
+                    size="small"
+                    sx={{
+                      position: 'absolute',
+                      top: 16,
+                      right: 16,
+                      backgroundColor: '#00ADB5',
+                      color: '#232931',
+                      fontWeight: 600,
+                      zIndex: 2,
+                    }}
                   />
-                  <div className="absolute top-4 right-4">
-                    <span className="bg-[#00ADB5] text-[#232931] text-xs px-2 py-1 rounded-full">
-                      {project.category}
-                    </span>
-                  </div>
-                </div>
+                </Box>
 
                 {/* Project Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-[#EEEEEE] mb-2">
+                <CardContent sx={{ p: 3 }}>
+                  <Typography variant="h6" component="h3" sx={{ color: '#EEEEEE', mb: 2, fontWeight: 600 }}>
                     {project.title}
-                  </h3>
-                  <p className="text-[#EEEEEE]/80 mb-4 line-clamp-3">
+                  </Typography>
+                  <Typography 
+                    sx={{ 
+                      color: '#EEEEEE', 
+                      opacity: 0.8, 
+                      mb: 3,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                    }}
+                  >
                     {project.description}
-                  </p>
+                  </Typography>
 
                   {/* Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.technologies.map((tech) => (
-                      <span
-                        key={tech}
-                        className="bg-[#00ADB5]/20 text-[#00ADB5] text-xs px-2 py-1 rounded"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                  <Box sx={{ mb: 3 }}>
+                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                      {project.technologies.map((tech) => (
+                        <Chip
+                          key={tech}
+                          label={tech}
+                          size="small"
+                          sx={{
+                            backgroundColor: 'rgba(0, 173, 181, 0.2)',
+                            color: '#00ADB5',
+                            fontSize: '0.75rem',
+                          }}
+                        />
+                      ))}
+                    </Stack>
+                  </Box>
 
                   {/* Project Links */}
-                  <div className="flex gap-3">
-                    <a
+                  <Stack direction="row" spacing={2}>
+                    <Button
+                      component="a"
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 bg-[#00ADB5] text-[#232931] text-center py-2 px-4 rounded-lg hover:bg-[#00bfc5] transition-colors text-sm font-medium"
-                      aria-label={`View live demo of ${project.title}`}
+                      variant="contained"
+                      startIcon={<FaExternalLinkAlt />}
+                      fullWidth
+                      sx={{
+                        backgroundColor: '#00ADB5',
+                        color: '#232931',
+                        '&:hover': {
+                          backgroundColor: '#00bfc5',
+                        },
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                      }}
                     >
                       Live Demo
-                    </a>
-                    <a
+                    </Button>
+                    <Button
+                      component="a"
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 border border-[#00ADB5] text-[#00ADB5] text-center py-2 px-4 rounded-lg hover:bg-[#393E46] transition-colors text-sm font-medium"
-                      aria-label={`View source code of ${project.title} on GitHub`}
+                      variant="outlined"
+                      startIcon={<FaGithub />}
+                      fullWidth
+                      sx={{
+                        borderColor: '#00ADB5',
+                        color: '#00ADB5',
+                        '&:hover': {
+                          borderColor: '#00bfc5',
+                          backgroundColor: 'rgba(0, 173, 181, 0.1)',
+                        },
+                        fontSize: '0.875rem',
+                        fontWeight: 500,
+                      }}
                     >
                       GitHub
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+                    </Button>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
 
       {/* Featured Project Section */}
-      <section className="py-16 bg-[#232931]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-[#EEEEEE] mb-4">
+      <Box sx={{ py: 8, backgroundColor: '#232931' }}>
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', mb: 6 }}>
+            <Typography variant="h3" component="h2" sx={{ color: '#EEEEEE', mb: 2, fontWeight: 'bold' }}>
               Featured Project
-            </h2>
-            <p className="text-[#EEEEEE]/80 max-w-2xl mx-auto">
+            </Typography>
+            <Typography variant="h6" sx={{ color: '#EEEEEE', opacity: 0.8, maxWidth: 'md', mx: 'auto' }}>
               Here&apos;s a detailed look at one of my most recent and
               challenging projects
-            </p>
-          </div>
+            </Typography>
+          </Box>
 
-          <div className="bg-[#393E46] rounded-lg shadow-sm border border-[#393E46] overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-2">
+          <Paper sx={{ backgroundColor: '#393E46', border: '1px solid #393E46', overflow: 'hidden' }}>
+            <Grid container>
               {/* Project Image */}
-              <div className="h-64 lg:h-full bg-[#232931] flex items-center justify-center">
-                <Image
-                  src="https://placehold.co/600x400/EEE/31343C"
-                  alt="Featured E-Commerce Platform Project"
-                  width={600}
-                  height={400}
-                  className="w-full h-48 object-cover bg-[#232931]"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  priority
-                  placeholder="blur"
-                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                />
-              </div>
+              <Grid size={{ xs: 12, lg: 6 }}>
+                <Box sx={{ height: { xs: 300, lg: '100%' }, minHeight: 300 }}>
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      backgroundColor: '#232931',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      position: 'relative',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: '100%',
+                        height: '100%',
+                        background: 'linear-gradient(135deg, #00ADB5 0%, #393E46 100%)',
+                        opacity: 0.3,
+                        position: 'absolute',
+                      }}
+                    />
+                    <Typography 
+                      sx={{ 
+                        color: '#EEEEEE', 
+                        opacity: 0.7,
+                        fontSize: '2rem',
+                        fontWeight: 600,
+                        zIndex: 1,
+                        textAlign: 'center',
+                      }}
+                    >
+                      E-Commerce Platform
+                    </Typography>
+                  </Box>
+                </Box>
+              </Grid>
 
               {/* Project Details */}
-              <div className="p-8">
-                <div className="mb-4">
-                  <span className="bg-[#00ADB5] text-[#232931] text-sm px-3 py-1 rounded-full">
-                    Featured
-                  </span>
-                </div>
-                <h3 className="text-2xl font-bold text-[#EEEEEE] mb-4">
-                  E-Commerce Platform
-                </h3>
-                <p className="text-[#EEEEEE]/80 mb-6 leading-relaxed">
-                  A comprehensive e-commerce solution built with Next.js and
-                  modern web technologies. Features include product management,
-                  user authentication, shopping cart functionality, payment
-                  processing with Stripe, and an admin dashboard for inventory
-                  management.
-                </p>
+              <Grid size={{ xs: 12, lg: 6 }}>
+                <Box sx={{ p: 4 }}>
+                  <Chip
+                    label="Featured"
+                    size="small"
+                    sx={{
+                      backgroundColor: '#00ADB5',
+                      color: '#232931',
+                      fontWeight: 600,
+                      mb: 2,
+                    }}
+                  />
+                  <Typography variant="h4" component="h3" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 'bold' }}>
+                    E-Commerce Platform
+                  </Typography>
+                  <Typography sx={{ color: '#EEEEEE', opacity: 0.8, mb: 4, lineHeight: 1.8 }}>
+                    A comprehensive e-commerce solution built with Next.js and
+                    modern web technologies. Features include product management,
+                    user authentication, shopping cart functionality, payment
+                    processing with Stripe, and an admin dashboard for inventory
+                    management.
+                  </Typography>
 
-                <div className="mb-6">
-                  <h4 className="font-semibold text-[#EEEEEE] mb-3">
-                    Key Features:
-                  </h4>
-                  <ul className="space-y-2 text-[#EEEEEE]/80">
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 bg-[#00ADB5] rounded-full mr-3"></span>
-                      Responsive design with mobile-first approach
-                    </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 bg-[#00ADB5] rounded-full mr-3"></span>
-                      Secure payment processing with Stripe
-                    </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 bg-[#00ADB5] rounded-full mr-3"></span>
-                      User authentication and authorization
-                    </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 bg-[#00ADB5] rounded-full mr-3"></span>
-                      Real-time inventory management
-                    </li>
-                    <li className="flex items-center">
-                      <span className="w-2 h-2 bg-[#00ADB5] rounded-full mr-3"></span>
-                      SEO optimized for better search rankings
-                    </li>
-                  </ul>
-                </div>
+                  <Box sx={{ mb: 4 }}>
+                    <Typography variant="h6" component="h4" sx={{ color: '#EEEEEE', mb: 2, fontWeight: 600 }}>
+                      Key Features:
+                    </Typography>
+                    <Stack spacing={1}>
+                      {[
+                        'Responsive design with mobile-first approach',
+                        'Secure payment processing with Stripe',
+                        'User authentication and authorization',
+                        'Real-time inventory management',
+                        'SEO optimized for better search rankings'
+                      ].map((feature, index) => (
+                        <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                          <Box sx={{ 
+                            width: 8, 
+                            height: 8, 
+                            backgroundColor: '#00ADB5', 
+                            borderRadius: '50%' 
+                          }} />
+                          <Typography sx={{ color: '#EEEEEE', opacity: 0.8 }}>
+                            {feature}
+                          </Typography>
+                        </Box>
+                      ))}
+                    </Stack>
+                  </Box>
 
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {[
-                    "React",
-                    "Next.js",
-                    "Stripe",
-                    "TailwindCSS",
-                    "MongoDB",
-                    "JWT",
-                  ].map((tech) => (
-                    <span
-                      key={tech}
-                      className="bg-[#00ADB5]/20 text-[#00ADB5] text-sm px-3 py-1 rounded-full"
+                  <Box sx={{ mb: 4 }}>
+                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                      {[
+                        "React",
+                        "Next.js",
+                        "Stripe",
+                        "TailwindCSS",
+                        "MongoDB",
+                        "JWT",
+                      ].map((tech) => (
+                        <Chip
+                          key={tech}
+                          label={tech}
+                          size="small"
+                          sx={{
+                            backgroundColor: 'rgba(0, 173, 181, 0.2)',
+                            color: '#00ADB5',
+                            fontSize: '0.875rem',
+                          }}
+                        />
+                      ))}
+                    </Stack>
+                  </Box>
+
+                  <Stack direction="row" spacing={2}>
+                    <Button
+                      component="a"
+                      href="https://example.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="contained"
+                      startIcon={<FaExternalLinkAlt />}
+                      sx={{
+                        backgroundColor: '#00ADB5',
+                        color: '#232931',
+                        px: 3,
+                        py: 1.5,
+                        '&:hover': {
+                          backgroundColor: '#00bfc5',
+                        },
+                        fontWeight: 500,
+                      }}
                     >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex gap-4">
-                  <a
-                    href="https://example.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-[#00ADB5] text-[#232931] px-6 py-3 rounded-lg hover:bg-[#00bfc5] transition-colors font-medium"
-                  >
-                    View Live Demo
-                  </a>
-                  <a
-                    href="https://github.com/example"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="border border-[#00ADB5] text-[#00ADB5] px-6 py-3 rounded-lg hover:bg-[#393E46] transition-colors font-medium"
-                  >
-                    View Code
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+                      View Live Demo
+                    </Button>
+                    <Button
+                      component="a"
+                      href="https://github.com/example"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="outlined"
+                      startIcon={<FaGithub />}
+                      sx={{
+                        borderColor: '#00ADB5',
+                        color: '#00ADB5',
+                        px: 3,
+                        py: 1.5,
+                        '&:hover': {
+                          borderColor: '#00bfc5',
+                          backgroundColor: 'rgba(0, 173, 181, 0.1)',
+                        },
+                        fontWeight: 500,
+                      }}
+                    >
+                      View Code
+                    </Button>
+                  </Stack>
+                </Box>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Container>
+      </Box>
 
       {/* Call to Action */}
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-[#EEEEEE] mb-4">
-            Interested in working together?
-          </h2>
-          <p className="text-[#EEEEEE]/80 mb-8 max-w-2xl mx-auto">
-            I&apos;m always open to discussing new opportunities and exciting
-            projects. Let&apos;s create something amazing together!
-          </p>
-          <Link
-            href="/contact"
-            className="bg-[#00ADB5] text-[#232931] px-8 py-3 rounded-lg font-semibold hover:bg-[#00bfc5] transition-colors"
-          >
-            Get In Touch
-          </Link>
-        </div>
-      </section>
-    </div>
+      <Box sx={{ py: 8 }}>
+        <Container maxWidth="md">
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography variant="h3" component="h2" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 'bold' }}>
+              Interested in working together?
+            </Typography>
+            <Typography variant="h6" sx={{ color: '#EEEEEE', opacity: 0.8, mb: 4, maxWidth: 'md', mx: 'auto' }}>
+              I&apos;m always open to discussing new opportunities and exciting
+              projects. Let&apos;s create something amazing together!
+            </Typography>
+            <Button
+              component={Link}
+              href="/contact"
+              variant="contained"
+              size="large"
+              sx={{
+                backgroundColor: '#00ADB5',
+                color: '#232931',
+                px: 4,
+                py: 1.5,
+                '&:hover': {
+                  backgroundColor: '#00bfc5',
+                },
+                fontWeight: 600,
+              }}
+            >
+              Get In Touch
+            </Button>
+          </Box>
+        </Container>
+      </Box>
+    </Box>
   );
 };
 
