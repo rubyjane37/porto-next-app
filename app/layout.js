@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -116,6 +117,7 @@ export default function RootLayout({ children }) {
           </main>
           <Footer />
           <SpeedInsights />
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
