@@ -52,18 +52,25 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      alert('Thank you for your message! I will get back to you soon.');
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) throw new Error('Gagal mengirim pesan');
+      alert('Terima kasih, pesan Anda berhasil dikirim!');
       setFormData({
         name: '',
         email: '',
         subject: '',
         message: ''
       });
+    } catch (err) {
+      alert(err.message || 'Gagal mengirim pesan');
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   const contactInfo = [

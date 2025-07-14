@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import Image from "next/image";
+import { useEffect, useState } from "react";
+import { fetchProjects } from "../services/portfolioService";
 import { 
   Container, 
   Typography, 
@@ -10,84 +13,52 @@ import {
   Button, 
   Chip,
   Stack,
-  Paper
+  Paper,
+  CircularProgress,
+  Alert
 } from '@mui/material';
 import { 
   FaExternalLinkAlt, 
   FaGithub 
 } from 'react-icons/fa';
+import Image from 'next/image';
 
 const Project = () => {
-  const projects = [
-    {
-      id: 1,
-      title: "E-Commerce Platform",
-      description:
-        "A modern e-commerce platform built with Next.js, featuring product catalog, shopping cart, user authentication, and Stripe payment integration.",
-      image: "/project1.jpg",
-      technologies: ["React", "Next.js", "Stripe", "TailwindCSS", "MongoDB"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/example",
-      category: "Full Stack",
-    },
-    {
-      id: 2,
-      title: "Task Management App",
-      description:
-        "A collaborative task management application with real-time updates, user roles, and project organization features.",
-      image: "/project2.jpg",
-      technologies: ["React", "Firebase", "TailwindCSS", "Context API"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/example",
-      category: "Frontend",
-    },
-    {
-      id: 3,
-      title: "Weather Dashboard",
-      description:
-        "A beautiful weather dashboard that provides location-based forecasts with interactive maps and detailed weather information.",
-      image: "/project3.jpg",
-      technologies: ["JavaScript", "Weather API", "CSS3", "HTML5"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/example",
-      category: "Frontend",
-    },
-    {
-      id: 4,
-      title: "Blog Platform",
-      description:
-        "A content management system for blogs with markdown support, SEO optimization, and admin dashboard.",
-      image: "/project4.jpg",
-      technologies: ["Next.js", "Markdown", "Prisma", "PostgreSQL"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/example",
-      category: "Full Stack",
-    },
-    {
-      id: 5,
-      title: "Portfolio Website",
-      description:
-        "A responsive portfolio website built with modern web technologies and best practices.",
-      image: "/project5.jpg",
-      technologies: ["React", "Next.js", "TailwindCSS", "Framer Motion"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/example",
-      category: "Frontend",
-    },
-    {
-      id: 6,
-      title: "Chat Application",
-      description:
-        "Real-time chat application with user authentication, message history, and file sharing capabilities.",
-      image: "/project6.jpg",
-      technologies: ["React", "Socket.io", "Node.js", "Express"],
-      liveUrl: "https://example.com",
-      githubUrl: "https://github.com/example",
-      category: "Full Stack",
-    },
-  ];
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getProjects = async () => {
+      try {
+        const data = await fetchProjects();
+        setProjects(data);
+      } catch (err) {
+        setError(err.message || 'Gagal mengambil data project');
+      } finally {
+        setLoading(false);
+      }
+    };
+    getProjects();
+  }, []);
 
   const categories = ["All", "Frontend", "Full Stack", "Backend"];
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', backgroundColor: '#232931' }}>
+        <CircularProgress sx={{ color: '#00ADB5' }} />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', backgroundColor: '#232931' }}>
+        <Alert severity="error">{error}</Alert>
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ backgroundColor: '#232931' }}>
@@ -122,39 +93,14 @@ const Project = () => {
               >
                 {/* Project Image */}
                 <Box sx={{ position: 'relative', height: 200 }}>
-                  <Box
-                    sx={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: '#232931',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      position: 'relative',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: '100%',
-                        height: '100%',
-                        background: 'linear-gradient(135deg, #00ADB5 0%, #393E46 100%)',
-                        opacity: 0.3,
-                        position: 'absolute',
-                      }}
-                    />
-                    <Typography 
-                      sx={{ 
-                        color: '#EEEEEE', 
-                        opacity: 0.7,
-                        fontSize: '1.2rem',
-                        fontWeight: 500,
-                        zIndex: 1,
-                      }}
-                    >
-                      {project.title}
-                    </Typography>
-                  </Box>
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    style={{ objectFit: 'cover', borderRadius: 8 }}
+                    sizes="(max-width: 600px) 100vw, 33vw"
+                    priority={false}
+                  />
                   <Chip
                     label={project.category}
                     size="small"
@@ -275,41 +221,15 @@ const Project = () => {
             <Grid container>
               {/* Project Image */}
               <Grid size={{ xs: 12, lg: 6 }}>
-                <Box sx={{ height: { xs: 300, lg: '100%' }, minHeight: 300 }}>
-                  <Box
-                    sx={{
-                      width: '100%',
-                      height: '100%',
-                      backgroundColor: '#232931',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      position: 'relative',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        width: '100%',
-                        height: '100%',
-                        background: 'linear-gradient(135deg, #00ADB5 0%, #393E46 100%)',
-                        opacity: 0.3,
-                        position: 'absolute',
-                      }}
-                    />
-                    <Typography 
-                      sx={{ 
-                        color: '#EEEEEE', 
-                        opacity: 0.7,
-                        fontSize: '2rem',
-                        fontWeight: 600,
-                        zIndex: 1,
-                        textAlign: 'center',
-                      }}
-                    >
-                      E-Commerce Platform
-                    </Typography>
-                  </Box>
+                <Box sx={{ height: { xs: 300, lg: '100%' }, minHeight: 300, position: 'relative' }}>
+                  <Image
+                    src={projects[0]?.image || 'https://placehold.co/600x400'}
+                    alt={projects[0]?.title || 'Featured Project'}
+                    fill
+                    style={{ objectFit: 'cover', borderRadius: 8 }}
+                    sizes="(max-width: 600px) 100vw, 50vw"
+                    priority
+                  />
                 </Box>
               </Grid>
 

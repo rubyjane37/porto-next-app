@@ -1,50 +1,40 @@
-import Image from 'next/image';
-import { 
-  Container, 
-  Typography, 
-  Box, 
-  Grid, 
-  Card, 
-  CardContent, 
+"use client";
+
+import { useEffect, useState } from 'react';
+import { fetchProfile, fetchExperiences } from '../services/portfolioService';
+import {
+  Container,
+  Typography,
+  Box,
+  Grid,
+  Card,
+  CardContent,
   LinearProgress,
   Avatar,
   Stack,
-  Chip
+  Chip,
+  CircularProgress,
+  Alert
 } from '@mui/material';
-import { 
-  FaReact, 
-  FaNodeJs, 
-  FaJs, 
-  FaGitAlt 
+import {
+  FaReact,
+  FaNodeJs,
+  FaJs,
+  FaGitAlt
 } from 'react-icons/fa';
-import { 
-  SiNextdotjs, 
-  SiTypescript, 
-  SiTailwindcss 
+import {
+  SiNextdotjs,
+  SiTypescript,
+  SiTailwindcss
 } from 'react-icons/si';
 
 const About = () => {
-  const experiences = [
-    {
-      year: '2023 - Present',
-      title: 'Senior Frontend Developer',
-      company: 'Tech Company',
-      description: 'Leading frontend development for web applications using React and Next.js'
-    },
-    {
-      year: '2021 - 2023',
-      title: 'Frontend Developer',
-      company: 'Digital Agency',
-      description: 'Developed responsive websites and web applications for various clients'
-    },
-    {
-      year: '2020 - 2021',
-      title: 'Junior Developer',
-      company: 'Startup',
-      description: 'Started my journey in web development with focus on modern JavaScript'
-    }
-  ];
+  const [profile, setProfile] = useState(null);
+  const [experiences, setExperiences] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  // Data statis yang tidak perlu API
   const education = [
     {
       year: '2023 - Present',
@@ -71,6 +61,40 @@ const About = () => {
     { label: 'Happy Clients', value: '15+' },
   ];
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const [profileData, expData] = await Promise.all([
+          fetchProfile(),
+          fetchExperiences()
+        ]);
+        setProfile(profileData);
+        setExperiences(expData);
+      } catch (err) {
+        setError(err.message || 'Gagal mengambil data profil/experience');
+      } finally {
+        setLoading(false);
+      }
+    };
+    getData();
+  }, []);
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', backgroundColor: '#232931' }}>
+        <CircularProgress sx={{ color: '#00ADB5' }} />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', backgroundColor: '#232931' }}>
+        <Alert severity="error">{error}</Alert>
+      </Box>
+    );
+  }
+
   return (
     <Box sx={{ backgroundColor: '#232931' }}>
       {/* Hero Section */}
@@ -80,8 +104,7 @@ const About = () => {
             About Me
           </Typography>
           <Typography variant="h6" sx={{ color: '#EEEEEE', opacity: 0.8, maxWidth: 'md', mx: 'auto' }}>
-            I&apos;m a passionate frontend developer with a love for creating beautiful, 
-            functional, and user-friendly web experiences.
+            {profile?.bio || 'I\'m a passionate frontend developer with a love for creating beautiful, functional, and user-friendly web experiences.'}
           </Typography>
         </Box>
 
@@ -90,10 +113,10 @@ const About = () => {
           <Grid size={{ xs: 12, lg: 6 }} sx={{ textAlign: { xs: 'center', lg: 'left' } }}>
             <Box sx={{ display: 'flex', justifyContent: { xs: 'center', lg: 'flex-start' } }}>
               <Avatar
-                src="/photo-profile/photo-profile.jpg"
-                alt="Profile"
-                sx={{ 
-                  width: 256, 
+                src={profile?.photoUrl || "/photo-profile/photo-profile.jpg"}
+                alt={profile?.name || "Profile"}
+                sx={{
+                  width: 256,
                   height: 256,
                   border: '4px solid #393E46',
                 }}
@@ -102,17 +125,13 @@ const About = () => {
           </Grid>
           <Grid size={{ xs: 12, lg: 6 }}>
             <Typography variant="h4" component="h2" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 600 }}>
-              Who I Am
+              {profile?.headline || 'Who I Am'}
             </Typography>
             <Typography sx={{ color: '#EEEEEE', opacity: 0.8, mb: 3, lineHeight: 1.8 }}>
-              I&apos;m a dedicated frontend developer with over 3 years of experience in creating 
-              modern web applications. I specialize in React, Next.js, and modern JavaScript, 
-              always staying up-to-date with the latest technologies and best practices.
+              {profile?.about || 'I\'m a dedicated frontend developer with over 3 years of experience in creating modern web applications. I specialize in React, Next.js, and modern JavaScript, always staying up-to-date with the latest technologies and best practices.'}
             </Typography>
             <Typography sx={{ color: '#EEEEEE', opacity: 0.8, mb: 4, lineHeight: 1.8 }}>
-              My passion lies in building user-centric applications that not only look great 
-              but also provide exceptional user experiences. I believe in writing clean, 
-              maintainable code and collaborating effectively with teams to deliver high-quality products.
+              {profile?.philosophy || 'My passion lies in building user-centric applications that not only look great but also provide exceptional user experiences. I believe in writing clean, maintainable code and collaborating effectively with teams to deliver high-quality products.'}
             </Typography>
             <Grid container spacing={3}>
               {stats.map((stat, index) => (
