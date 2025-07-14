@@ -8,6 +8,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -90,13 +91,19 @@ const theme = createTheme({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <title>Portfolio - Frontend Developer</title>
-        <meta
-          name="description"
-          content="Frontend developer passionate about creating beautiful and functional web experiences"
-        />
-      </head>
+      <Head>
+        <title>Portfolio - Ruby Jane | Frontend Developer</title>
+        <meta name="description" content="Portfolio Ruby Jane - Frontend developer passionate about creating beautiful and functional web experiences. Explore projects, skills, and contact info." />
+        <meta property="og:title" content="Portfolio - Ruby Jane | Frontend Developer" />
+        <meta property="og:description" content="Portfolio Ruby Jane - Frontend developer passionate about creating beautiful and functional web experiences." />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="/photo-profile/photo-profile.jpg" />
+        <meta property="og:url" content="https://yourdomain.com" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Portfolio - Ruby Jane | Frontend Developer" />
+        <meta name="twitter:description" content="Portfolio Ruby Jane - Frontend developer passionate about creating beautiful and functional web experiences." />
+        <meta name="twitter:image" content="/photo-profile/photo-profile.jpg" />
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable}`}
         style={{

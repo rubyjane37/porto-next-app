@@ -19,10 +19,10 @@ const Header = () => {
   };
 
   const menuItems = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Project', href: '/project' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Beranda', href: '/' },
+    { name: 'Tentang Saya', href: '/about' },
+    { name: 'Projek', href: '/project' },
+    { name: 'Kontak', href: '/contact' },
   ];
 
   const menuList = (
@@ -77,7 +77,7 @@ const Header = () => {
             flexGrow: 1,
           }}
         >
-          Portfolio
+          Natsrul Ulum
         </Typography>
 
         {/* Desktop Navigation */}

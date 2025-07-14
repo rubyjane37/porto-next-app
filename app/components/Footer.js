@@ -53,24 +53,24 @@ const Footer = () => {
           {/* Brand Section */}
           <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h5" component="h3" sx={{ fontWeight: 'bold', mb: 2 }}>
-              Portfolio
+              Natsrul Ulum
             </Typography>
             <Typography variant="body2" sx={{ color: '#EEEEEE', maxWidth: 'md' }}>
-              Frontend developer passionate about creating beautiful and functional web experiences.
+              Junior Web Developer yang antusias membangun website modern, responsif, dan mudah digunakan.
             </Typography>
           </Grid>
 
           {/* Quick Links */}
           <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" component="h4" sx={{ mb: 2, fontWeight: 600 }}>
-              Quick Links
+              Navigasi Cepat
             </Typography>
             <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
               {[
-                { name: 'Home', href: '/' },
-                { name: 'About', href: '/about' },
-                { name: 'Projects', href: '/project' },
-                { name: 'Contact', href: '/contact' },
+                { name: 'Beranda', href: '/' },
+                { name: 'Tentang Saya', href: '/about' },
+                { name: 'Projek', href: '/project' },
+                { name: 'Kontak', href: '/contact' },
               ].map((link) => (
                 <Box component="li" key={link.name} sx={{ mb: 1 }}>
                   <Link 
@@ -93,7 +93,7 @@ const Footer = () => {
           {/* Social Links */}
           <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" component="h4" sx={{ mb: 2, fontWeight: 600 }}>
-              Connect
+              Media Sosial
             </Typography>
             <Box sx={{ display: 'flex', gap: 1 }}>
               {socialLinks.map((social) => (
@@ -111,7 +111,7 @@ const Footer = () => {
                     },
                     transition: 'all 0.3s ease',
                   }}
-                  aria-label={social.name}
+                  aria-label={`Ikuti ${social.name}`}
                 >
                   {social.icon}
                 </IconButton>
@@ -124,7 +124,7 @@ const Footer = () => {
         <Divider sx={{ my: 4, borderColor: '#393E46' }} />
         <Box sx={{ textAlign: 'center' }}>
           <Typography variant="body2" sx={{ color: '#EEEEEE' }}>
-            © {currentYear} Portfolio. All rights reserved.
+            © {currentYear} Natsrul Ulum. Seluruh hak cipta.
           </Typography>
         </Box>
       </Container>

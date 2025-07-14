@@ -1,13 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import { 
   Container, 
   Typography, 
   Box, 
   Grid, 
-  Card, 
-  CardContent, 
   TextField, 
   Button, 
   IconButton, 
@@ -17,7 +14,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Chip
+  Snackbar,
+  Alert
 } from '@mui/material';
 import { 
   Email as EmailIcon, 
@@ -30,6 +28,46 @@ import {
   FaLinkedin, 
   FaTwitter 
 } from 'react-icons/fa';
+import Head from "next/head";
+import { useState, useEffect } from 'react';
+
+const SkeletonContact = () => (
+  <div className="flex flex-col items-center py-16 animate-pulse" aria-hidden="true">
+    {/* Judul Siluet */}
+    <div className="h-8 w-1/2 bg-gradient-to-r from-[#393E46] via-[#232931] to-[#393E46] rounded mb-8 shimmer" />
+    {/* Form Siluet */}
+    <div className="w-full max-w-lg flex flex-col gap-4">
+      {[...Array(3)].map((_, i) => (
+        <div key={i} className="h-12 w-full bg-gradient-to-r from-[#393E46] via-[#232931] to-[#393E46] rounded shimmer" />
+      ))}
+      {/* Textarea Siluet */}
+      <div className="h-24 w-full bg-gradient-to-r from-[#393E46] via-[#232931] to-[#393E46] rounded shimmer" />
+      {/* Tombol Siluet */}
+      <div className="h-12 w-32 bg-gradient-to-r from-[#393E46] via-[#232931] to-[#393E46] rounded shimmer self-end" />
+    </div>
+    <style jsx>{`
+      .shimmer {
+        position: relative;
+        overflow: hidden;
+      }
+      .shimmer::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -150px;
+        height: 100%;
+        width: 150px;
+        background: linear-gradient(90deg, transparent, rgba(238,238,238,0.08), transparent);
+        animation: shimmer 1.5s infinite;
+      }
+      @keyframes shimmer {
+        100% {
+          left: 100%;
+        }
+      }
+    `}</style>
+  </div>
+);
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -38,19 +76,40 @@ const Contact = () => {
     subject: '',
     message: ''
   });
-
+  const [formError, setFormError] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 600);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const validate = () => {
+    const errors = {};
+    if (!formData.name.trim()) errors.name = 'Nama wajib diisi';
+    if (!formData.email.trim()) {
+      errors.email = 'Email wajib diisi';
+    } else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email)) {
+      errors.email = 'Format email tidak valid';
+    }
+    if (!formData.subject.trim()) errors.subject = 'Subjek wajib diisi';
+    if (!formData.message.trim()) errors.message = 'Pesan wajib diisi';
+    return errors;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormError(prev => ({ ...prev, [name]: undefined }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errors = validate();
+    setFormError(errors);
+    if (Object.keys(errors).length > 0) return;
     setIsSubmitting(true);
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
@@ -59,19 +118,21 @@ const Contact = () => {
         body: JSON.stringify(formData),
       });
       if (!res.ok) throw new Error('Gagal mengirim pesan');
-      alert('Terima kasih, pesan Anda berhasil dikirim!');
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
+      setSnackbar({ open: true, message: 'Terima kasih, pesan Anda berhasil dikirim!', severity: 'success' });
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {
-      alert(err.message || 'Gagal mengirim pesan');
+      setSnackbar({ open: true, message: err.message || 'Gagal mengirim pesan', severity: 'error' });
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  if (loading) {
+    return <SkeletonContact />;
+  }
+  if (isSubmitting) {
+    return <SkeletonContact />;
+  }
 
   const contactInfo = [
     {
@@ -93,361 +154,142 @@ const Contact = () => {
       link: 'tel:+6281234567890'
     }
   ];
-
   const socialLinks = [
-    {
-      name: 'GitHub',
-      href: 'https://github.com',
-      icon: <FaGithub size={24} />
-    },
-    {
-      name: 'LinkedIn',
-      href: 'https://linkedin.com',
-      icon: <FaLinkedin size={24} />
-    },
-    {
-      name: 'Twitter',
-      href: 'https://twitter.com',
-      icon: <FaTwitter size={24} />
-    }
+    { name: 'GitHub', icon: <FaGithub />, href: 'https://github.com/' },
+    { name: 'LinkedIn', icon: <FaLinkedin />, href: 'https://linkedin.com/' },
+    { name: 'Twitter', icon: <FaTwitter />, href: 'https://twitter.com/' },
   ];
 
   return (
-    <Box sx={{ backgroundColor: '#232931' }}>
-      {/* Hero Section */}
-      <Container maxWidth="lg" sx={{ py: 8 }}>
-        <Box sx={{ textAlign: 'center', mb: 6 }}>
-          <Typography variant="h3" component="h1" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 'bold' }}>
-            Get In Touch
-          </Typography>
-          <Typography variant="h6" sx={{ color: '#EEEEEE', opacity: 0.8, maxWidth: 'md', mx: 'auto' }}>
-            I&apos;m always interested in hearing about new opportunities and exciting projects. 
-            Feel free to reach out if you&apos;d like to work together or just want to say hello!
-          </Typography>
-        </Box>
-
-        <Grid container spacing={4}>
-          {/* Contact Form */}
-          <Grid size={{ xs: 12, lg: 6 }}>
-            <Card sx={{ backgroundColor: '#393E46', border: '1px solid #393E46' }}>
-              <CardContent sx={{ p: 4 }}>
-                <Typography variant="h5" component="h2" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 600 }}>
-                  Send Message
-                </Typography>
-                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
-                  <Grid container spacing={3}>
-                    <Grid size={{ xs: 12, md: 6 }}>
+    <>
+      <Head>
+        <title>Kontak | Portfolio - Natsrul Ulum</title>
+        <meta name="description" content="Hubungi Natsrul Ulum, Junior Web Developer, untuk kolaborasi, projek, atau konsultasi. Isi form atau gunakan info kontak di halaman ini." />
+      </Head>
+      <Container maxWidth="md" sx={{ py: { xs: 4, md: 8 } }}>
+        <Typography variant="h3" component="h2" sx={{ color: '#EEEEEE', textAlign: 'center', mb: 2, fontWeight: 'bold', letterSpacing: 1 }}>
+          Kontak Saya
+        </Typography>
+        <Typography variant="h6" sx={{ color: '#EEEEEE', opacity: 0.8, textAlign: 'center', mb: 6, fontWeight: 400, maxWidth: 600, mx: 'auto' }}>
+          Saya selalu terbuka untuk kolaborasi, projek baru, atau sekadar diskusi seputar teknologi. Silakan hubungi saya melalui form atau info kontak berikut!
+        </Typography>
+        <div className="flex flex-col md:flex-row gap-8 items-stretch">
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="flex-1 bg-[#232931] p-8 rounded-xl shadow-md flex flex-col gap-4 w-full min-h-full">
                       <TextField
-                        fullWidth
-                        label="Name *"
+              label="Nama"
                         name="name"
                         value={formData.name}
                         onChange={handleInputChange}
-                        required
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            color: '#EEEEEE',
-                            '& fieldset': {
-                              borderColor: '#393E46',
-                            },
-                            '&:hover fieldset': {
-                              borderColor: '#00ADB5',
-                            },
-                            '&.Mui-focused fieldset': {
-                              borderColor: '#00ADB5',
-                            },
-                          },
-                          '& .MuiInputLabel-root': {
-                            color: '#EEEEEE',
-                            '&.Mui-focused': {
-                              color: '#00ADB5',
-                            },
-                          },
-                          '& .MuiInputBase-input': {
-                            backgroundColor: '#232931',
-                          },
-                        }}
+              fullWidth
+              error={!!formError.name}
+              helperText={formError.name}
+              disabled={isSubmitting}
+              autoComplete="off"
+              sx={{ input: { color: '#EEEEEE' }, label: { color: '#EEEEEE' } }}
                       />
-                    </Grid>
-                    <Grid size={{ xs: 12, md: 6 }}>
                       <TextField
-                        fullWidth
-                        label="Email *"
+              label="Email"
                         name="email"
-                        type="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        required
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            color: '#EEEEEE',
-                            '& fieldset': {
-                              borderColor: '#393E46',
-                            },
-                            '&:hover fieldset': {
-                              borderColor: '#00ADB5',
-                            },
-                            '&.Mui-focused fieldset': {
-                              borderColor: '#00ADB5',
-                            },
-                          },
-                          '& .MuiInputLabel-root': {
-                            color: '#EEEEEE',
-                            '&.Mui-focused': {
-                              color: '#00ADB5',
-                            },
-                          },
-                          '& .MuiInputBase-input': {
-                            backgroundColor: '#232931',
-                          },
-                        }}
+              fullWidth
+              error={!!formError.email}
+              helperText={formError.email}
+              disabled={isSubmitting}
+              autoComplete="off"
+              sx={{ input: { color: '#EEEEEE' }, label: { color: '#EEEEEE' } }}
                       />
-                    </Grid>
-                    <Grid size={{ xs: 12 }}>
                       <TextField
-                        fullWidth
-                        label="Subject *"
+              label="Subjek"
                         name="subject"
                         value={formData.subject}
                         onChange={handleInputChange}
-                        required
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            color: '#EEEEEE',
-                            '& fieldset': {
-                              borderColor: '#393E46',
-                            },
-                            '&:hover fieldset': {
-                              borderColor: '#00ADB5',
-                            },
-                            '&.Mui-focused fieldset': {
-                              borderColor: '#00ADB5',
-                            },
-                          },
-                          '& .MuiInputLabel-root': {
-                            color: '#EEEEEE',
-                            '&.Mui-focused': {
-                              color: '#00ADB5',
-                            },
-                          },
-                          '& .MuiInputBase-input': {
-                            backgroundColor: '#232931',
-                          },
-                        }}
+              fullWidth
+              error={!!formError.subject}
+              helperText={formError.subject}
+              disabled={isSubmitting}
+              autoComplete="off"
+              sx={{ input: { color: '#EEEEEE' }, label: { color: '#EEEEEE' } }}
                       />
-                    </Grid>
-                    <Grid size={{ xs: 12 }}>
                       <TextField
-                        fullWidth
-                        label="Message *"
+              label="Pesan"
                         name="message"
                         value={formData.message}
                         onChange={handleInputChange}
-                        required
+              fullWidth
                         multiline
-                        rows={6}
-                        sx={{
-                          '& .MuiOutlinedInput-root': {
-                            color: '#EEEEEE',
-                            '& fieldset': {
-                              borderColor: '#393E46',
-                            },
-                            '&:hover fieldset': {
-                              borderColor: '#00ADB5',
-                            },
-                            '&.Mui-focused fieldset': {
-                              borderColor: '#00ADB5',
-                            },
-                          },
-                          '& .MuiInputLabel-root': {
-                            color: '#EEEEEE',
-                            '&.Mui-focused': {
-                              color: '#00ADB5',
-                            },
-                          },
-                          '& .MuiInputBase-input': {
-                            backgroundColor: '#232931',
-                          },
-                        }}
+              minRows={4}
+              error={!!formError.message}
+              helperText={formError.message}
+              disabled={isSubmitting}
+              autoComplete="off"
+              sx={{ input: { color: '#EEEEEE' }, label: { color: '#EEEEEE' } }}
                       />
-                    </Grid>
-                    <Grid size={{ xs: 12 }}>
                       <Button
                         type="submit"
-                        fullWidth
                         variant="contained"
+              color="primary"
                         disabled={isSubmitting}
-                        startIcon={<SendIcon />}
-                        sx={{
-                          backgroundColor: '#00ADB5',
-                          color: '#232931',
-                          py: 1.5,
-                          '&:hover': {
-                            backgroundColor: '#00bfc5',
-                          },
-                          '&:disabled': {
-                            opacity: 0.5,
-                          },
-                        }}
+              sx={{ mt: 2, fontWeight: 600, borderRadius: 2 }}
                       >
-                        {isSubmitting ? 'Sending...' : 'Send Message'}
+              {isSubmitting ? 'Mengirim...' : 'Kirim Pesan'}
                       </Button>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Contact Information */}
-          <Grid size={{ xs: 12, lg: 6 }}>
-            <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 4 }}>
-              <Box>
-                <Typography variant="h5" component="h2" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 600 }}>
-                  Contact Information
+          </form>
+          {/* Info Kontak */}
+          <div className="flex-1 bg-gradient-to-br from-[#393E46] via-[#232931] to-[#232931] p-10 rounded-2xl shadow-lg w-full flex flex-col gap-8 min-w-[260px] min-h-full border border-[#4a4e57]/40">
+            <Typography variant="h5" sx={{ color: '#EEEEEE', fontWeight: 700, mb: 2, letterSpacing: 1 }}>
+              Info Kontak
                 </Typography>
-                <List>
-                  {contactInfo.map((info, index) => (
-                    <ListItem key={index} sx={{ px: 0 }}>
-                      <ListItemIcon sx={{ color: '#00ADB5', minWidth: 48 }}>
-                        <Box sx={{ 
-                          backgroundColor: 'rgba(0, 173, 181, 0.2)', 
-                          borderRadius: 1, 
-                          p: 1,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}>
-                          {info.icon}
-                        </Box>
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={
-                          <Typography variant="h6" sx={{ color: '#EEEEEE', fontWeight: 500 }}>
-                            {info.title}
-                          </Typography>
-                        }
-                        secondary={
-                          info.link ? (
-                            <a
-                              href={info.link}
-                              style={{
-                                color: '#EEEEEE',
-                                opacity: 0.8,
-                                textDecoration: 'none',
-                                transition: 'color 0.3s ease',
-                              }}
-                              onMouseEnter={(e) => e.target.style.color = '#00ADB5'}
-                              onMouseLeave={(e) => e.target.style.color = '#EEEEEE'}
-                            >
-                              {info.value}
-                            </a>
+            <div className="flex flex-col gap-6">
+              {contactInfo.map((info, idx) => (
+                <div key={idx} className="flex items-start gap-4">
+                  <span className="text-[#00ADB5] text-3xl flex-shrink-0 mt-1">{info.icon}</span>
+                  <div>
+                    <div className="text-[#EEEEEE] font-bold text-base mb-1 tracking-wide">{info.title}</div>
+                    {info.link ? (
+                      <a href={info.link} className="text-[#EEEEEE] opacity-90 hover:text-[#00ADB5] transition-colors text-sm font-mono" target="_blank" rel="noopener noreferrer">{info.value}</a>
                           ) : (
-                            <Typography sx={{ color: '#EEEEEE', opacity: 0.8 }}>
-                              {info.value}
-                            </Typography>
-                          )
-                        }
-                      />
-                    </ListItem>
+                      <span className="text-[#EEEEEE] opacity-80 text-sm font-mono">{info.value}</span>
+                    )}
+                  </div>
+                </div>
                   ))}
-                </List>
-              </Box>
-
-              <Box>
-                <Typography variant="h6" component="h3" sx={{ color: '#EEEEEE', mb: 2, fontWeight: 600 }}>
-                  Follow Me
+            </div>
+            <div className="border-t border-[#4a4e57]/40 my-2" />
+            <div>
+              <Typography variant="h6" sx={{ color: '#EEEEEE', fontWeight: 600, mb: 2, letterSpacing: 0.5 }}>
+                Social Media
                 </Typography>
-                <Box sx={{ display: 'flex', gap: 1 }}>
+              <div className="flex gap-4 mt-1">
                   {socialLinks.map((social) => (
-                    <IconButton
+                  <a
                       key={social.name}
-                      component="a"
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      sx={{
-                        backgroundColor: '#393E46',
-                        color: '#EEEEEE',
-                        '&:hover': {
-                          backgroundColor: 'rgba(0, 173, 181, 0.2)',
-                          color: '#00ADB5',
-                        },
-                        transition: 'all 0.3s ease',
-                      }}
+                    className="text-[#EEEEEE] hover:text-[#00ADB5] text-2xl transition-colors rounded-full p-2 hover:bg-[#232931]/60 focus:outline-none focus:ring-2 focus:ring-[#00ADB5]"
                       aria-label={social.name}
                     >
                       {social.icon}
-                    </IconButton>
+                  </a>
                   ))}
-                </Box>
-              </Box>
-
-              <Paper sx={{ backgroundColor: '#393E46', p: 3, border: '1px solid #393E46' }}>
-                <Typography variant="h6" component="h3" sx={{ color: '#EEEEEE', mb: 2, fontWeight: 600 }}>
-                  Let&apos;s Work Together
-                </Typography>
-                <Typography sx={{ color: '#EEEEEE', opacity: 0.8, mb: 3 }}>
-                  I&apos;m currently available for freelance work and full-time opportunities. 
-                  Whether you have a project in mind or just want to chat, I&apos;d love to hear from you.
-                </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                  {['Available for freelance projects', 'Open to full-time opportunities', 'Quick response time (within 24 hours)'].map((item, index) => (
-                    <Box key={index} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <Box sx={{ 
-                        width: 8, 
-                        height: 8, 
-                        backgroundColor: '#00ADB5', 
-                        borderRadius: '50%' 
-                      }} />
-                      <Typography variant="body2" sx={{ color: '#EEEEEE', opacity: 0.8 }}>
-                        {item}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Box>
-              </Paper>
-            </Box>
-          </Grid>
-        </Grid>
+              </div>
+            </div>
+          </div>
+        </div>
       </Container>
-
-      {/* FAQ Section */}
-      <Box sx={{ py: 8, backgroundColor: '#232931' }}>
-        <Container maxWidth="md">
-          <Typography variant="h3" component="h2" sx={{ color: '#EEEEEE', textAlign: 'center', mb: 6, fontWeight: 'bold' }}>
-            Frequently Asked Questions
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-            {[
-              {
-                question: 'What services do you offer?',
-                answer: 'I specialize in frontend development, creating responsive websites and web applications using modern technologies like React, Next.js, and TailwindCSS.'
-              },
-              {
-                question: 'How long does a typical project take?',
-                answer: 'Project timelines vary depending on complexity. A simple website might take 1-2 weeks, while a complex web application could take 1-3 months. I\'ll provide a detailed timeline during our initial discussion.'
-              },
-              {
-                question: 'Do you provide ongoing support after project completion?',
-                answer: 'Yes! I offer ongoing maintenance and support packages to ensure your project continues to run smoothly and stays up-to-date with the latest technologies.'
-              }
-            ].map((faq, index) => (
-              <Card key={index} sx={{ backgroundColor: '#393E46', border: '1px solid #393E46' }}>
-                <CardContent sx={{ p: 4 }}>
-                  <Typography variant="h6" component="h3" sx={{ color: '#EEEEEE', mb: 2, fontWeight: 600 }}>
-                    {faq.question}
-                  </Typography>
-                  <Typography sx={{ color: '#EEEEEE', opacity: 0.8 }}>
-                    {faq.answer}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))}
-          </Box>
-        </Container>
-      </Box>
-    </Box>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert severity={snackbar.severity} sx={{ width: '100%' }}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 
