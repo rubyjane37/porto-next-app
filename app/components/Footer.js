@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link';
 import { Container, Grid, Typography, Box, IconButton, Divider } from '@mui/material';
 import { 

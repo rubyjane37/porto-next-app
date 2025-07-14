@@ -11,7 +11,6 @@ import { FaReact, FaNodeJs, FaJs } from "react-icons/fa";
 import { SiNextdotjs, SiTypescript, SiTailwindcss } from "react-icons/si";
 import ProjectCard from './Card';
 import SkeletonCard from "./SkeletonCard";
-import Head from "next/head";
 import useSWR from 'swr';
 
 const fetcher = url => fetch(url).then(res => res.json());
@@ -56,12 +55,7 @@ const HomeClient = ({ initialFeaturedProjects }) => {
   }
 
   return (
-    <>
-      <Head>
-        <title>Beranda | Portfolio - Natsrul Ulum</title>
-        <meta name="description" content="Selamat datang di portfolio Natsrul Ulum. Lihat projek pilihan, skill, dan kontak saya di sini." />
-      </Head>
-      <Box sx={{ backgroundColor: "#232931" }}>
+    <Box sx={{ backgroundColor: "#232931" }}>
         {/* Hero Section */}
         <Container maxWidth="lg" sx={{ py: 8 }}>
           <Box sx={{ textAlign: "center" }}>
@@ -253,7 +247,6 @@ const HomeClient = ({ initialFeaturedProjects }) => {
           </Container>
         </Box>
       </Box>
-    </>
   );
 };
 

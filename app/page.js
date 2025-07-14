@@ -17,7 +17,23 @@ import HomeClient from './components/HomeClient';
 const fetcher = url => fetch(url).then(res => res.json());
 
 export default async function Home() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/projects/featured`, { cache: 'no-store' });
-  const initialFeaturedProjects = await res.json();
-  return <HomeClient initialFeaturedProjects={initialFeaturedProjects} />;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://your-api-url.vercel.app';
+  
+  try {
+    const res = await fetch(`${apiUrl}/projects/featured`, { 
+      cache: 'no-store',
+      next: { revalidate: 60 } // Cache for 60 seconds
+    });
+    
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    
+    const initialFeaturedProjects = await res.json();
+    return <HomeClient initialFeaturedProjects={initialFeaturedProjects} />;
+  } catch (error) {
+    console.error('Error fetching featured projects:', error);
+    // Return empty array as fallback
+    return <HomeClient initialFeaturedProjects={[]} />;
+  }
 }

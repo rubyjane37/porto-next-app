@@ -28,7 +28,6 @@ import {
   FaLinkedin, 
   FaTwitter 
 } from 'react-icons/fa';
-import Head from "next/head";
 import { useState, useEffect } from 'react';
 
 const SkeletonContact = () => (
@@ -162,10 +161,6 @@ const Contact = () => {
 
   return (
     <>
-      <Head>
-        <title>Kontak | Portfolio - Natsrul Ulum</title>
-        <meta name="description" content="Hubungi Natsrul Ulum, Junior Web Developer, untuk kolaborasi, projek, atau konsultasi. Isi form atau gunakan info kontak di halaman ini." />
-      </Head>
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 8 } }}>
         <Typography variant="h3" component="h2" sx={{ color: '#EEEEEE', textAlign: 'center', mb: 2, fontWeight: 'bold', letterSpacing: 1 }}>
           Kontak Saya

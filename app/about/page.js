@@ -28,15 +28,46 @@ import AboutClient from '../components/AboutClient';
 const fetcher = url => fetch(url).then(res => res.json());
 
 export default async function About() {
-  const [profileRes, expRes, eduRes] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile`, { cache: 'no-store' }),
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/experiences`, { cache: 'no-store' }),
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/education`, { cache: 'no-store' })
-  ]);
-  const [initialProfile, initialExperiences, initialEducation] = await Promise.all([
-    profileRes.json(),
-    expRes.json(),
-    eduRes.json()
-  ]);
-  return <AboutClient initialProfile={initialProfile} initialExperiences={initialExperiences} initialEducation={initialEducation} />;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://your-api-url.vercel.app';
+  
+  try {
+    const [profileRes, expRes, eduRes] = await Promise.all([
+      fetch(`${apiUrl}/profile`, { 
+        cache: 'no-store',
+        next: { revalidate: 60 }
+      }),
+      fetch(`${apiUrl}/experiences`, { 
+        cache: 'no-store',
+        next: { revalidate: 60 }
+      }),
+      fetch(`${apiUrl}/education`, { 
+        cache: 'no-store',
+        next: { revalidate: 60 }
+      })
+    ]);
+    
+    // Check if all responses are ok
+    if (!profileRes.ok || !expRes.ok || !eduRes.ok) {
+      throw new Error('One or more API requests failed');
+    }
+    
+    const [initialProfile, initialExperiences, initialEducation] = await Promise.all([
+      profileRes.json(),
+      expRes.json(),
+      eduRes.json()
+    ]);
+    
+    return <AboutClient 
+      initialProfile={initialProfile} 
+      initialExperiences={initialExperiences} 
+      initialEducation={initialEducation} 
+    />;
+  } catch (error) {
+    console.error('Error fetching about data:', error);
+    return <AboutClient 
+      initialProfile={{}} 
+      initialExperiences={[]} 
+      initialEducation={[]} 
+    />;
+  }
 } 
