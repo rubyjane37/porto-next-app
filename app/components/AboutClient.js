@@ -25,45 +25,63 @@ import useSWR from 'swr';
 import { fetchProfile, fetchExperiences, fetchEducation } from '../services/portfolioService';
 
 const SkeletonAbout = () => (
-  <div className="flex flex-col items-center py-12 animate-pulse" aria-hidden="true">
-    {/* Avatar Siluet */}
-    <div className="w-64 h-64 rounded-full bg-gradient-to-r from-[#393E46] via-[#232931] to-[#393E46] mb-6 shimmer flex items-center justify-center">
-      <svg className="w-24 h-24 text-[#393E46] opacity-60" fill="currentColor" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10" />
-      </svg>
-    </div>
-    {/* Judul Siluet */}
-    <div className="h-8 w-1/2 bg-gradient-to-r from-[#393E46] via-[#232931] to-[#393E46] rounded mb-4 shimmer" />
-    {/* Bio Siluet */}
-    <div className="h-4 w-2/3 bg-gradient-to-r from-[#393E46] via-[#232931] to-[#393E46] rounded mb-6 shimmer" />
-    {/* Stats/Skills Siluet */}
-    <div className="flex flex-wrap gap-4 justify-center w-full max-w-2xl">
-      {[...Array(6)].map((_, i) => (
-        <div key={i} className="h-6 w-32 bg-gradient-to-r from-[#393E46] via-[#232931] to-[#393E46] rounded shimmer" />
-      ))}
-    </div>
-    <style jsx>{`
-      .shimmer {
-        position: relative;
-        overflow: hidden;
-      }
-      .shimmer::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -150px;
-        height: 100%;
-        width: 150px;
-        background: linear-gradient(90deg, transparent, rgba(238,238,238,0.08), transparent);
-        animation: shimmer 1.5s infinite;
-      }
-      @keyframes shimmer {
-        100% {
-          left: 100%;
-        }
-      }
-    `}</style>
-  </div>
+  <Box sx={{ backgroundColor: '#232931' }}>
+    <Container maxWidth="lg" sx={{ py: 8 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        {/* Avatar Siluet */}
+        <Box sx={{ 
+          width: 256, 
+          height: 256, 
+          borderRadius: '50%', 
+          background: 'linear-gradient(90deg, #393E46, #232931, #393E46)',
+          mb: 3,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          <Box sx={{ 
+            width: 96, 
+            height: 96, 
+            color: '#393E46', 
+            opacity: 0.6 
+          }}>
+            <svg fill="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" />
+            </svg>
+          </Box>
+        </Box>
+        {/* Judul Siluet */}
+        <Box sx={{ 
+          height: 32, 
+          width: '50%', 
+          background: 'linear-gradient(90deg, #393E46, #232931, #393E46)',
+          borderRadius: 1,
+          mb: 2
+        }} />
+        {/* Bio Siluet */}
+        <Box sx={{ 
+          height: 16, 
+          width: '66%', 
+          background: 'linear-gradient(90deg, #393E46, #232931, #393E46)',
+          borderRadius: 1,
+          mb: 3
+        }} />
+        {/* Stats/Skills Siluet */}
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', maxWidth: 'md' }}>
+          {[...Array(6)].map((_, i) => (
+            <Box key={i} sx={{ 
+              height: 24, 
+              width: 128, 
+              background: 'linear-gradient(90deg, #393E46, #232931, #393E46)',
+              borderRadius: 1
+            }} />
+          ))}
+        </Box>
+      </Box>
+    </Container>
+  </Box>
 );
 
 const AboutClient = ({ initialProfile, initialExperiences, initialEducation }) => {
@@ -122,9 +140,11 @@ const AboutClient = ({ initialProfile, initialExperiences, initialEducation }) =
   }
   if (error) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <span className="text-red-500">{error.message || 'Gagal mengambil data profil/experience'}</span>
-      </div>
+      <Box sx={{ backgroundColor: '#232931', display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+        <Alert severity="error" sx={{ color: '#EEEEEE' }}>
+          {error.message || 'Gagal mengambil data profil/experience'}
+        </Alert>
+      </Box>
     );
   }
 

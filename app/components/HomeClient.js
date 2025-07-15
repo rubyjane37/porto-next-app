@@ -37,11 +37,15 @@ const HomeClient = ({ initialFeaturedProjects }) => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-wrap gap-6 justify-center">
-        {[...Array(3)].map((_, i) => (
-          <SkeletonCard key={i} descLines={4} />
-        ))}
-      </div>
+      <Box sx={{ backgroundColor: "#232931" }}>
+        <Container maxWidth="lg" sx={{ py: 8 }}>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, justifyContent: 'center' }}>
+            {[...Array(3)].map((_, i) => (
+              <SkeletonCard key={i} descLines={4} />
+            ))}
+          </Box>
+        </Container>
+      </Box>
     );
   }
   if (error) {
