@@ -6,16 +6,19 @@ import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
 import Image from 'next/image';
 import ProjectCard from './Card';
 import SkeletonCard from "./SkeletonCard";
-import Head from "next/head";
 import useSWR from 'swr';
-
-const fetcher = url => fetch(url).then(res => res.json());
+import { fetchProjects } from '../services/portfolioService';
 
 const ProjectClient = ({ initialProjects }) => {
   const { data: projects = [], error, isLoading } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/projects`,
-    fetcher,
-    { refreshInterval: 5000, fallbackData: initialProjects }
+    'projects',
+    fetchProjects,
+    { 
+      refreshInterval: 5000, 
+      fallbackData: initialProjects,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    }
   );
 
   const categories = ["All", "Frontend", "Full Stack", "Backend"];
@@ -39,12 +42,7 @@ const ProjectClient = ({ initialProjects }) => {
   }
 
   return (
-    <>
-      <Head>
-        <title>Projek | Portfolio - Natsrul Ulum</title>
-        <meta name="description" content="Daftar projek Natsrul Ulum, Junior Web Developer. Lihat detail projek, teknologi, dan demo live di sini." />
-      </Head>
-      <Box sx={{ backgroundColor: '#232931' }}>
+    <Box sx={{ backgroundColor: '#232931' }}>
         {/* Hero Section */}
         <Container maxWidth="lg" sx={{ py: 8 }}>
           <Box sx={{ textAlign: 'center', mb: 6 }}>
@@ -59,7 +57,7 @@ const ProjectClient = ({ initialProjects }) => {
           {/* Project Grid */}
           <Grid container spacing={4}>
             {projects.map((project) => (
-              <Grid size={{ xs: 12, md: 6, lg: 4 }} key={project.id}>
+              <Grid item xs={12} md={6} lg={4} key={project.id}>
                 <ProjectCard
                   image={project.image}
                   title={project.title}
@@ -89,7 +87,7 @@ const ProjectClient = ({ initialProjects }) => {
             <Paper sx={{ backgroundColor: '#393E46', border: '1px solid #393E46', overflow: 'hidden' }}>
               <Grid container>
                 {/* Project Image */}
-                <Grid size={{ xs: 12, lg: 6 }}>
+                <Grid item xs={12} lg={6}>
                   <Box sx={{ height: { xs: 300, lg: '100%' }, minHeight: 300, position: 'relative' }}>
                     <Image
                       src={projects[0]?.image || 'https://placehold.co/600x400'}
@@ -103,7 +101,7 @@ const ProjectClient = ({ initialProjects }) => {
                 </Grid>
 
                 {/* Project Details */}
-                <Grid size={{ xs: 12, lg: 6 }}>
+                <Grid item xs={12} lg={6}>
                   <Box sx={{ p: 4 }}>
                     <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
                       <Chip
@@ -263,7 +261,6 @@ const ProjectClient = ({ initialProjects }) => {
           </Container>
         </Box>
       </Box>
-    </>
   );
 };
 

@@ -8,7 +8,7 @@ import {
   Stack,
 } from "@mui/material";
 import { FaReact, FaNodeJs, FaJs } from "react-icons/fa";
-import { SiNextdotjs, SiTypeScript, SiTailwindcss } from "react-icons/si";
+import { SiNextdotjs, SiTypescript, SiTailwindcss } from "react-icons/si";
 import ProjectCard from './Card';
 import SkeletonCard from "./SkeletonCard";
 import useSWR from 'swr';
@@ -159,7 +159,7 @@ const HomeClient = ({ initialFeaturedProjects }) => {
           </Box>
           <Grid container spacing={3}>
             {skills.map((skill) => (
-              <Grid size={{ xs: 6, md: 4, lg: 2 }} key={skill.name}>
+              <Grid item xs={6} md={4} lg={2} key={skill.name}>
                 <Box
                   sx={{
                     backgroundColor: "#393E46",
@@ -217,7 +217,7 @@ const HomeClient = ({ initialFeaturedProjects }) => {
           </Box>
           <Grid container spacing={4}>
             {featuredProjects.map((project) => (
-              <Grid size={{ xs: 12, md: 6, lg: 4 }} key={project.id}>
+              <Grid item xs={12} md={6} lg={4} key={project.id}>
                 <ProjectCard project={project} />
               </Grid>
             ))}

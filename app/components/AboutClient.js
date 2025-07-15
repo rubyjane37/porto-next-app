@@ -20,11 +20,9 @@ import {
   SiTypescript,
   SiTailwindcss
 } from 'react-icons/si';
-import SkeletonCard from "./SkeletonCard";
 import Image from "next/image";
 import useSWR from 'swr';
-
-const fetcher = url => fetch(url).then(res => res.json());
+import { fetchProfile, fetchExperiences, fetchEducation } from '../services/portfolioService';
 
 const SkeletonAbout = () => (
   <div className="flex flex-col items-center py-12 animate-pulse" aria-hidden="true">
@@ -70,19 +68,34 @@ const SkeletonAbout = () => (
 
 const AboutClient = ({ initialProfile, initialExperiences, initialEducation }) => {
   const { data: profileData = null, error: errorProfile } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/profile`,
-    fetcher,
-    { fallbackData: initialProfile, refreshInterval: 5000 }
+    'profile',
+    fetchProfile,
+    { 
+      fallbackData: initialProfile, 
+      refreshInterval: 5000,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    }
   );
   const { data: expData = [], error: errorExp } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/experiences`,
-    fetcher,
-    { fallbackData: initialExperiences, refreshInterval: 5000 }
+    'experiences',
+    fetchExperiences,
+    { 
+      fallbackData: initialExperiences, 
+      refreshInterval: 5000,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    }
   );
   const { data: education = [], error: errorEdu } = useSWR(
-    `${process.env.NEXT_PUBLIC_API_URL}/education`,
-    fetcher,
-    { fallbackData: initialEducation, refreshInterval: 5000 }
+    'education',
+    fetchEducation,
+    { 
+      fallbackData: initialEducation, 
+      refreshInterval: 5000,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    }
   );
   const error = errorProfile || errorExp || errorEdu;
   const loading = !profileData || !expData || !education;
@@ -130,7 +143,7 @@ const AboutClient = ({ initialProfile, initialExperiences, initialEducation }) =
 
         {/* Profile Section */}
         <Grid container spacing={4} alignItems="center" sx={{ mb: 8 }}>
-          <Grid size={{ xs: 12, lg: 6 }} sx={{ textAlign: { xs: 'center', lg: 'left' } }}>
+          <Grid item xs={12} lg={6} sx={{ textAlign: { xs: 'center', lg: 'left' } }}>
             <Box sx={{ display: 'flex', justifyContent: { xs: 'center', lg: 'flex-start' } }}>
               <Image
                 src={profileData?.photoUrl || "/photo-profile/photo-profile.jpg"}
@@ -142,7 +155,7 @@ const AboutClient = ({ initialProfile, initialExperiences, initialEducation }) =
               />
             </Box>
           </Grid>
-          <Grid size={{ xs: 12, lg: 6 }}>
+          <Grid item xs={12} lg={6}>
             <Typography variant="h4" component="h2" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 600 }}>
               {profileData?.headline || 'Siapa Saya?'}
             </Typography>
@@ -154,7 +167,7 @@ const AboutClient = ({ initialProfile, initialExperiences, initialEducation }) =
             </Typography>
             <Grid container spacing={3}>
               {stats.map((stat, index) => (
-                <Grid size={{ xs: 4 }} key={index}>
+                <Grid item xs={4} key={index}>
                   <Box sx={{ textAlign: 'center' }}>
                     <Typography variant="h4" sx={{ color: '#00ADB5', fontWeight: 'bold', mb: 1 }}>
                       {stat.value}
@@ -178,11 +191,11 @@ const AboutClient = ({ initialProfile, initialExperiences, initialEducation }) =
           </Typography>
           <Grid container spacing={3}>
             {expData.map((exp, index) => (
-              <Grid size={{ xs: 12 }} key={index}>
+              <Grid item xs={12} key={index}>
                 <Box sx={{ backgroundColor: '#393E46', border: '1px solid #393E46' }}>
                   <Box sx={{ p: 4 }}>
                     <Grid container alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
-                      <Grid size={{ xs: 12, md: 8 }}>
+                      <Grid item xs={12} md={8}>
                         <Typography variant="h5" component="h3" sx={{ color: '#EEEEEE', mb: 1, fontWeight: 600 }}>
                           {exp.title}
                         </Typography>
@@ -190,7 +203,7 @@ const AboutClient = ({ initialProfile, initialExperiences, initialEducation }) =
                           {exp.company}
                         </Typography>
                       </Grid>
-                      <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { xs: 'left', md: 'right' } }}>
+                      <Grid item xs={12} md={4} sx={{ textAlign: { xs: 'left', md: 'right' } }}>
                         <Typography sx={{ color: '#EEEEEE', opacity: 0.6, fontWeight: 500 }}>
                           {exp.year}
                         </Typography>
@@ -215,11 +228,11 @@ const AboutClient = ({ initialProfile, initialExperiences, initialEducation }) =
           </Typography>
           <Grid container spacing={3}>
             {education.map((edu, index) => (
-              <Grid size={{ xs: 12 }} key={index}>
+              <Grid item xs={12} key={index}>
                 <Box sx={{ backgroundColor: '#393E46', border: '1px solid #393E46' }}>
                   <Box sx={{ p: 4 }}>
                     <Grid container alignItems="center" justifyContent="space-between" sx={{ mb: 2 }}>
-                      <Grid size={{ xs: 12, md: 8 }}>
+                      <Grid item xs={12} md={8}>
                         <Typography variant="h5" component="h3" sx={{ color: '#EEEEEE', mb: 1, fontWeight: 600 }}>
                           {edu.degree}
                         </Typography>
@@ -227,7 +240,7 @@ const AboutClient = ({ initialProfile, initialExperiences, initialEducation }) =
                           {edu.school}
                         </Typography>
                       </Grid>
-                      <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { xs: 'left', md: 'right' } }}>
+                      <Grid item xs={12} md={4} sx={{ textAlign: { xs: 'left', md: 'right' } }}>
                         <Typography sx={{ color: '#EEEEEE', opacity: 0.6, fontWeight: 500 }}>
                           {edu.year}
                         </Typography>
@@ -251,7 +264,7 @@ const AboutClient = ({ initialProfile, initialExperiences, initialEducation }) =
             Skills & Expertise
           </Typography>
           <Grid container spacing={4}>
-            <Grid size={{ xs: 12, md: 6 }}>
+            <Grid item xs={12} md={6}>
               <Typography variant="h5" component="h3" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 600 }}>
                 Frontend Development
               </Typography>
@@ -288,7 +301,7 @@ const AboutClient = ({ initialProfile, initialExperiences, initialEducation }) =
                 ))}
               </Stack>
             </Grid>
-            <Grid size={{ xs: 12, md: 6 }}>
+            <Grid item xs={12} md={6}>
               <Typography variant="h5" component="h3" sx={{ color: '#EEEEEE', mb: 3, fontWeight: 600 }}>
                 Other Skills
               </Typography>
