@@ -28,19 +28,19 @@ import AboutClient from '../components/AboutClient';
 const fetcher = url => fetch(url).then(res => res.json());
 
 export default async function About() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://your-api-url.vercel.app';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://porto-natsrululum37-api.vercel.app';
   
   try {
     const [profileRes, expRes, eduRes] = await Promise.all([
-      fetch(`${apiUrl}/profile`, { 
+      fetch(`${apiUrl}/api/profile`, { 
         cache: 'no-store',
         next: { revalidate: 60 }
       }),
-      fetch(`${apiUrl}/experiences`, { 
+      fetch(`${apiUrl}/api/experiences`, { 
         cache: 'no-store',
         next: { revalidate: 60 }
       }),
-      fetch(`${apiUrl}/education`, { 
+      fetch(`${apiUrl}/api/education`, { 
         cache: 'no-store',
         next: { revalidate: 60 }
       })

@@ -29,6 +29,7 @@ import {
   FaTwitter 
 } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
+import { sendContactMessage } from '../services/portfolioService';
 
 const SkeletonContact = () => (
   <div className="flex flex-col items-center py-16 animate-pulse" aria-hidden="true">
@@ -109,14 +110,10 @@ const Contact = () => {
     const errors = validate();
     setFormError(errors);
     if (Object.keys(errors).length > 0) return;
+    
     setIsSubmitting(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-      if (!res.ok) throw new Error('Gagal mengirim pesan');
+      await sendContactMessage(formData);
       setSnackbar({ open: true, message: 'Terima kasih, pesan Anda berhasil dikirim!', severity: 'success' });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (err) {

@@ -26,13 +26,13 @@ export const metadata = {
     type: "website",
     images: ["/photo-profile/photo-profile.jpg"],
     url: "https://natsrululum37.vercel.app",
-  },
+    },
   twitter: {
     card: "summary_large_image",
     title: "Portfolio - Natsrul Ulum | Frontend Developer",
     description: "Portfolio Natsrul Ulum - Frontend developer passionate about creating beautiful and functional web experiences.",
     images: ["/photo-profile/photo-profile.jpg"],
-  },
+          },
 };
 
 export default function RootLayout({ children }) {

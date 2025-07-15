@@ -23,10 +23,10 @@ import ProjectClient from '../components/ProjectClient';
 const fetcher = url => fetch(url).then(res => res.json());
 
 export default async function Project() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://your-api-url.vercel.app';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://porto-natsrululum37-api.vercel.app';
   
   try {
-    const res = await fetch(`${apiUrl}/projects`, { 
+    const res = await fetch(`${apiUrl}/api/projects`, { 
       cache: 'no-store',
       next: { revalidate: 60 }
     });
