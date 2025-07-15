@@ -8,12 +8,11 @@ import {
   Stack,
 } from "@mui/material";
 import { FaReact, FaNodeJs, FaJs } from "react-icons/fa";
-import { SiNextdotjs, SiTypescript, SiTailwindcss } from "react-icons/si";
+import { SiNextdotjs, SiTypeScript, SiTailwindcss } from "react-icons/si";
 import ProjectCard from './Card';
 import SkeletonCard from "./SkeletonCard";
 import useSWR from 'swr';
-
-const fetcher = url => fetch(url).then(res => res.json());
+import { fetchFeaturedProjects } from '../services/portfolioService';
 
 const HomeClient = ({ initialFeaturedProjects }) => {
   const skills = [
@@ -25,11 +24,9 @@ const HomeClient = ({ initialFeaturedProjects }) => {
     { name: "Node.js", icon: <FaNodeJs size={32} /> },
   ];
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://porto-natsrululum37-api.vercel.app';
-  
   const { data: featuredProjects = [], error, isLoading } = useSWR(
-    `${apiUrl}/api/projects/featured`,
-    fetcher,
+    'featured-projects',
+    fetchFeaturedProjects,
     { 
       refreshInterval: 5000, 
       fallbackData: initialFeaturedProjects,
@@ -219,32 +216,25 @@ const HomeClient = ({ initialFeaturedProjects }) => {
             </Typography>
           </Box>
           <Grid container spacing={4}>
-            {featuredProjects.map((project, index) => (
-              <Grid size={{ xs: 12, md: 6, lg: 4 }} key={index}>
-                <ProjectCard
-                  image={project.image}
-                  title={project.title}
-                  description={project.description}
-                  category={project.category}
-                  technologies={project.technologies}
-                  liveurl={project.liveurl || project.liveUrl}
-                  githuburl={project.githuburl || project.githubUrl}
-                />
+            {featuredProjects.map((project) => (
+              <Grid size={{ xs: 12, md: 6, lg: 4 }} key={project.id}>
+                <ProjectCard project={project} />
               </Grid>
             ))}
           </Grid>
           <Box sx={{ textAlign: "center", mt: 6 }}>
             <Button
               href="/project"
-              variant="contained"
+              variant="outlined"
               size="large"
               sx={{
-                backgroundColor: "#00ADB5",
-                color: "#232931",
+                borderColor: "#00ADB5",
+                color: "#00ADB5",
                 px: 4,
                 py: 1.5,
                 "&:hover": {
-                  backgroundColor: "#00bfc5",
+                  borderColor: "#00bfc5",
+                  backgroundColor: "rgba(0, 173, 181, 0.1)",
                 },
               }}
             >

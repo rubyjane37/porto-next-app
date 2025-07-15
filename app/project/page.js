@@ -19,23 +19,11 @@ import ProjectCard from '../components/Card';
 import SkeletonCard from "../components/SkeletonCard";
 import useSWR from 'swr';
 import ProjectClient from '../components/ProjectClient';
-
-const fetcher = url => fetch(url).then(res => res.json());
+import { fetchProjects } from '../services/portfolioService';
 
 export default async function Project() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://porto-natsrululum37-api.vercel.app';
-  
   try {
-    const res = await fetch(`${apiUrl}/api/projects`, { 
-      cache: 'no-store',
-      next: { revalidate: 60 }
-    });
-    
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-    
-    const initialProjects = await res.json();
+    const initialProjects = await fetchProjects();
     return <ProjectClient initialProjects={initialProjects} />;
   } catch (error) {
     console.error('Error fetching projects:', error);

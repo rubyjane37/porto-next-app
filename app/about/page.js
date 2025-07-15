@@ -24,37 +24,14 @@ import SkeletonCard from "../components/SkeletonCard";
 import Image from "next/image";
 import useSWR from 'swr';
 import AboutClient from '../components/AboutClient';
-
-const fetcher = url => fetch(url).then(res => res.json());
+import { fetchProfile, fetchExperiences, fetchEducation } from '../services/portfolioService';
 
 export default async function About() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://porto-natsrululum37-api.vercel.app';
-  
   try {
-    const [profileRes, expRes, eduRes] = await Promise.all([
-      fetch(`${apiUrl}/api/profile`, { 
-        cache: 'no-store',
-        next: { revalidate: 60 }
-      }),
-      fetch(`${apiUrl}/api/experiences`, { 
-        cache: 'no-store',
-        next: { revalidate: 60 }
-      }),
-      fetch(`${apiUrl}/api/education`, { 
-        cache: 'no-store',
-        next: { revalidate: 60 }
-      })
-    ]);
-    
-    // Check if all responses are ok
-    if (!profileRes.ok || !expRes.ok || !eduRes.ok) {
-      throw new Error('One or more API requests failed');
-    }
-    
     const [initialProfile, initialExperiences, initialEducation] = await Promise.all([
-      profileRes.json(),
-      expRes.json(),
-      eduRes.json()
+      fetchProfile(),
+      fetchExperiences(),
+      fetchEducation()
     ]);
     
     return <AboutClient 
