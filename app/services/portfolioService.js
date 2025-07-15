@@ -15,7 +15,7 @@ const mapKeysToCamel = (obj) => {
 
 // Create axios instance with better configuration
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://porto-natsrululum37-api.vercel.app',
   timeout: 10000, // 10 seconds timeout
   headers: {
     'Content-Type': 'application/json',
